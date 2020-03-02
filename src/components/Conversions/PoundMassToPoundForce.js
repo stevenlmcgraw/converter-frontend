@@ -23,7 +23,6 @@ class InputValues extends React.Component {
             <fieldset>
                 <legend>Enter value for {variableNames[variableName]}: </legend>
                 <input value={inputValue}
-                        //type="number"
                         onChange={this.handleChange} />
             </fieldset>
         );
@@ -42,31 +41,27 @@ class PoundMassToPoundForce extends React.Component {
                         poundsForce: Decimal};
     }
 
-    handlePoundsMassChange(inputValue){
-        this.setState({ poundsMass: inputValue });
+    handlePoundsMassChange = async function(inputValue){
+        await this.setState({ poundsMass: inputValue});
         this.calculatePoundsForce();
     };
 
-    handleAccelerationChange(inputValue){
-        this.setState({ acceleration: inputValue });
+    handleAccelerationChange = async function(inputValue){
+        await this.setState({ acceleration: inputValue });
         this.calculatePoundsForce();  
     };
 
     calculatePoundsForce() {
         
-    const earthGravityFtPerSecSq = new Decimal(parseFloat(32.174));
-    const decimalPoundsMass = new Decimal(parseFloat(this.state.poundsMass));
-    const decimalAcceleration = new Decimal(parseFloat(this.state.acceleration));
-
-    const result = (decimalPoundsMass * decimalAcceleration) / earthGravityFtPerSecSq;
+    const earthGravityFtPerSecSq = 32.174;
+    
+    const result = (this.state.poundsMass * this.state.acceleration) / earthGravityFtPerSecSq;
 
     this.setState(
         { poundsForce: result });
     };
 
     render() {
-        //const poundsMass = this.props.poundsMass;
-        //const acceleration = this.props.acceleration;
         return (
             <div>
             <div>
