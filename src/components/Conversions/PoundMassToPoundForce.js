@@ -1,60 +1,29 @@
 import React from "react";
+import InputValues from "../Utilities/InputValues";
 import {Decimal} from 'decimal.js';
-
-const variableNames = {
-    pM: 'Pounds Mass',
-    a: 'Acceleration Due to Gravity'
-}
-
-class InputValues extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(e) {
-        this.props.onVariableChange(e.target.value);
-    }
-
-    render() {
-        const inputValue = this.props.inputValue;
-        const variableName = this.props.variableName;
-        return (
-            <fieldset>
-                <legend>Enter value for {variableNames[variableName]}: </legend>
-                <input value={inputValue}
-                        onChange={this.handleChange} />
-            </fieldset>
-        );
-    }
-
-}
 
 class PoundMassToPoundForce extends React.Component {
     constructor(props) {
         super(props);
-        this.handlePoundsMassChange = this.handlePoundsMassChange.bind(this);
-        this.handleAccelerationChange = this.handleAccelerationChange.bind(this);
-        this.calculatePoundsForce = this.calculatePoundsForce.bind(this);
         this.state = {poundsMass: Decimal, 
                         acceleration: Decimal, 
                         poundsForce: Decimal};
     }
 
-    handlePoundsMassChange = async function(inputValue){
+    handlePoundsMassChange = async (inputValue) => {
         await this.setState({ poundsMass: inputValue});
         this.calculatePoundsForce();
     };
 
-    handleAccelerationChange = async function(inputValue){
+    handleAccelerationChange = async (inputValue) => {
         await this.setState({ acceleration: inputValue });
         this.calculatePoundsForce();  
     };
 
-    calculatePoundsForce() {
+    calculatePoundsForce = () => {
         
     const earthGravityFtPerSecSq = 32.174;
-    
+
     const result = (this.state.poundsMass * this.state.acceleration) / earthGravityFtPerSecSq;
 
     this.setState(
@@ -62,6 +31,10 @@ class PoundMassToPoundForce extends React.Component {
     };
 
     render() {
+        const variableNames = {
+            pM: 'Pounds Mass',
+            a: 'Acceleration Due to Gravity'
+        }
         return (
             <div>
             <div>
