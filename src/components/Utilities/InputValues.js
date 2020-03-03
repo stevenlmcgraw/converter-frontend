@@ -2,7 +2,11 @@ import React from "react";
 
 class InputValues extends React.Component {
     constructor(props) {
-        super(props); 
+        super(props);
+        this.state = {
+            inputValue: '',
+            variableName: ''
+        }
     }
 
     handleChange = (e) => {
@@ -10,13 +14,10 @@ class InputValues extends React.Component {
     }
 
     render() {
-        const inputValue = this.props.inputValue;
-        const variableName = this.props.variableName;
-        const variableNames = {};
         return (
             <fieldset>
-                <legend>Enter value for {variableNames[variableName]}: </legend>
-                <input value={inputValue}
+                <legend>Enter value for {this.props.variableName}: </legend>
+                <input value={this.props.inputValue}
                         onChange={this.handleChange} />
             </fieldset>
         );

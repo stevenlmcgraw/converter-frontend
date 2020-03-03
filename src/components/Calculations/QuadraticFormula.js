@@ -10,7 +10,12 @@ class QuadraticFormula extends React.Component {
             b: Decimal,
             c: Decimal,
             x1: Decimal,
-            x2: Decimal
+            x2: Decimal,
+            variableNames: {
+                coefA: 'Coefficient A',
+                coefB: 'Coefficient B',
+                coefC: 'Coefficient C'
+            }
         }
     }
 
@@ -46,26 +51,21 @@ class QuadraticFormula extends React.Component {
     }
 
     render() {
-        const variableNames = {
-            coefA: 'Coefficient A',
-            coefB: 'Coefficient B',
-            coefC: 'Coefficient C'
-        }
         return (
             <div>
                 <div>
                     <InputValues 
-                    variableName="coefA"
+                    variableName={this.state.variableNames.coefA}
                     inputValue={this.props.a}
                     onVariableChange={this.handleChangeA}
                     />
                     <InputValues 
-                    variableName="coefB"
+                    variableName={this.state.variableNames.coefB}
                     inputValue={this.props.b}
                     onVariableChange={this.handleChangeB}
                     />
                     <InputValues 
-                    variableName="coefC"
+                    variableName={this.state.variableNames.coefC}
                     inputValue={this.props.c}
                     onVariableChange={this.handleChangeC}
                     />
