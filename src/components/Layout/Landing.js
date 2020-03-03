@@ -12,6 +12,9 @@ export class Landing extends React.Component {
                 <h1 className="display-3 mb-4">Unit Converter</h1>
 
                 <hr />
+                <Link className="btn btn-lg btn-primary mr-2" to="/quadraticFormula">
+                  Quadratic Formula
+                </Link>
                 <Link className="btn btn-lg btn-primary mr-2" to="/poundmassToPoundforce">
                   Pound Mass to Pound Force
                 </Link>

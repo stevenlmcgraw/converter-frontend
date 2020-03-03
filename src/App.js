@@ -8,6 +8,7 @@ import NotFound from "./components/Layout/NotFound";
 import { Provider } from "react-redux";
 import store from "./store";
 import PoundMassToPoundForce from "./components/Conversions/PoundMassToPoundForce";
+import QuadraticFormula from './components/Calculations/QuadraticFormula';
 
 class App extends React.Component {
 
@@ -28,6 +29,7 @@ class App extends React.Component {
               }
               <Switch>
                 <Route exact path="/" component={Landing} />
+                <Route exact path="/quadraticFormula" component={QuadraticFormula} />
                 <Route exact path="/poundmassToPoundforce" component={PoundMassToPoundForce} />
                 <Route component={NotFound} />
               </Switch>
