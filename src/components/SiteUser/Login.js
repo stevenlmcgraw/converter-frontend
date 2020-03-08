@@ -1,12 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Form, Input, Button, notification } from 'antd';
-import { login } from '../../api_utility/ApiCalls';
-import { ACCESS_TOKEN } from '../../constants/index';
-
-const FormIten = Form.Item;
+import { Form } from 'antd';
+import LoginForm from '../../components/SiteUser/LoginForm';
 
 class Login extends React.Component {
+    // constructor(props) {
+    //     super(props);
+    // }
 
-    
+    render() {
+        
+        const AntWrappedLoginForm = Form.create()(LoginForm);
+        
+        return(
+            <div>
+                <h1>Login!</h1>
+                <br></br>
+                <div>
+                    <LoginForm onLogin={(e) => this.props.onLogin}/>
+                        
+                   
+                </div>
+            </div>
+        );
+    }
 }
+
+export default Login;

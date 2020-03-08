@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Input, Button, notification } from 'antd';
+import { Form, Input, Button, Icon, notification } from 'antd';
 import { login } from '../../api_utility/ApiCalls';
 import { ACCESS_TOKEN } from '../../constants';
 
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     handleSubmit = (event) => {
         
@@ -22,6 +22,7 @@ class LoginForm extends React.Component {
                 .then(response => {
                     localStorage.setItem(ACCESS_TOKEN, response.accessToken);
                     this.props.onLogin();
+                    console.log('Hit LoginForm handleSubmit inside then().');
                 }).catch(error => {
                     if(error.status === 401) {
                         notification.error({
@@ -30,6 +31,7 @@ class LoginForm extends React.Component {
                         });
                     }
                     else {
+                        console.log('Hit LoginForm handleSubmit else.');
                         notification.error({
                             message: 'Saturn Hotdog Calculator',
                             description: error.message || 'Uh-oh! Something went sideways, try again please.'
@@ -44,6 +46,7 @@ class LoginForm extends React.Component {
         const { getFieldDecorator } = this.props.form;
 
         return(
+            <div>
             <Form onSubmit={this.handleSubmit}>
                 <FormItem>
                     {getFieldDecorator('username', {
@@ -59,6 +62,7 @@ class LoginForm extends React.Component {
                     )
                 }
                 </FormItem>
+                <br></br>
                 <FormItem>
                     {getFieldDecorator('password', {
                         rules: [{ required: true, message: 'Please enter your password!' }],
@@ -68,21 +72,29 @@ class LoginForm extends React.Component {
                             prefix={<Icon type="lock" />}
                             size="large"
                             name="password"
-                            type="password" />
+                            type="password"
+                            placeholder="Enter password" />
                     )
                 }
                 </FormItem>
                 <FormItem>
+                <div>
+                <br></br>
                     <Button 
                         type="primary"
                         htmlType="submit"
                         size="large"
                     >Login!</Button>
+                    <br></br>
+                    <br></br>
                     Not registered? <Link to="/register">Get registered!</Link>
-                </FormItem>          
+                </div>
+                </FormItem>  
+                       
             </Form>
+            </div> 
         );
     }
 }
 
-export default LoginForm;
+export default Form.create()(LoginForm);
