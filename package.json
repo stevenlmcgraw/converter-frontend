@@ -6,7 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
-    "antd": "^4.0.1",
+    "antd": "^3.2.2",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "decimal.js": "^10.2.0",

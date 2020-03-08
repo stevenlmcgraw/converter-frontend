@@ -8,3 +8,6 @@ export const MAX_EMAIL_LENGTH = 50;
 
 export const MIN_PASSWORD_LENGTH = 8;
 export const MAX_PASSWORD_LENGTH = 30;
+
+export const DEFAULT_SUCCESSFUL_REGISTER_MESSAGE = 
+"Thank you for registering! Please login to save calculations, make a favorites list, and more!";

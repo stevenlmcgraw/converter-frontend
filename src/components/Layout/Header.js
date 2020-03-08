@@ -8,6 +8,7 @@ class Header extends React.Component {
                 <a href="/" className="navbar-brand">
                     {"Main"}
                 </a>
+                <a href="/register" className="navbar-brand">{"Register"}</a>
 
             </div>
             </nav>
