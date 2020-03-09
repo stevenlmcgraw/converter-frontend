@@ -11,9 +11,10 @@ import PoundMassToPoundForce from "./components/Conversions/PoundMassToPoundForc
 import QuadraticFormula from './components/Calculations/QuadraticFormula';
 import Register from './components/SiteUser/Register';
 import Login from './components/SiteUser/Login';
+import ConvertLanding from './components/Layout/ConvertLanding';
+import CalculateLanding from './components/Layout/CalculateLanding';
 
 class App extends React.Component {
-
 
   render() {
 
@@ -31,6 +32,8 @@ class App extends React.Component {
               }
               <Switch>
                 <Route exact path="/" component={Landing} />
+                <Route exact path="/convert" component={ConvertLanding} />
+                <Route exact path="/calculate" component={CalculateLanding} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/quadraticFormula" component={QuadraticFormula} />

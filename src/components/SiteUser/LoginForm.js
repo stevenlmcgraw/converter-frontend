@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Form, Input, Button, Icon, notification } from 'antd';
 import { login } from '../../api_utility/ApiCalls';
 import { ACCESS_TOKEN } from '../../constants';
@@ -7,9 +7,6 @@ import { ACCESS_TOKEN } from '../../constants';
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
 
     handleSubmit = (event) => {
         
@@ -97,4 +94,4 @@ class LoginForm extends React.Component {
     }
 }
 
-export default Form.create()(LoginForm);
+export default withRouter(Form.create()(LoginForm));

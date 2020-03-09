@@ -5,10 +5,8 @@ class Header extends React.Component {
         return (
             <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-3 py-0">
             <div className="container">
-                <a href="/" className="navbar-brand">
-                    {"Main"}
-                </a>
-                <a href="/register" className="navbar-brand">{"Register"}</a>
+                <a href="/" className="navbar-brand">{"Main"}</a>
+                <a href="/login" className="navbar-brand">{"Login/Register"}</a>
 
             </div>
             </nav>
