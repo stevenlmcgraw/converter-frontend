@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Input, Button, notification } from 'antd';
+import { Form, Input, Button, Icon, notification } from 'antd';
 import { register, checkUsernameAvailability, checkEmailAvailability } from '../../api_utility/ApiCalls';
 import { MIN_USERNAME_LENGTH, MAX_USERNAME_LENGTH, 
     MAX_EMAIL_LENGTH, MIN_PASSWORD_LENGTH, 
@@ -66,15 +66,16 @@ class Register extends React.Component {
     render() {
         return (
             <div>
-                <h1>Register as Site User</h1>
+                <h1>Register!</h1>
+                <br></br>
                     <div>
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem
-                            label="Username"
                             hasFeedback
                             validateStatus={this.state.username.validateStatus}
                             help={this.state.username.errorMsg}>
                             <Input
+                                prefix={<Icon type="user" />}
                                 size="large"
                                 name="username"
                                 autoComplete="off"
@@ -84,12 +85,14 @@ class Register extends React.Component {
                                 onChange={(event) => 
                                     this.handleInputValueChange(event, this.validateUsername)} />
                         </FormItem>
+                        <br></br>
                         <FormItem
-                            label="Email"
+                            
                             hasFeedback
                             validateStatus={this.state.email.validateStatus}
                             help={this.state.email.errorMsg}>
                             <Input 
+                                prefix={<Icon type="mail" />}
                                 size="large"
                                 name="email"
                                 type="email"
@@ -100,11 +103,12 @@ class Register extends React.Component {
                                 onChange={(event) => 
                                     this.handleInputValueChange(event, this.validateEmail)} />
                         </FormItem>
+                        <br></br>
                         <FormItem
-                            label="Password"
                             validateStatus={this.state.password.validateStatus}
                             help={this.state.password.errorMsg}>
                             <Input
+                                prefix={<Icon type="lock" />}
                                 size="large"
                                 name="password"
                                 type="password"
@@ -114,13 +118,18 @@ class Register extends React.Component {
                                 onChange={(event) => 
                                     this.handleInputValueChange(event, this.validatePassword)} />
                         </FormItem>
+                        <br></br>
                         <FormItem>
+                        <div>
                             <Button 
                                 type="primary"
                                 htmlType="submit"
                                 size="large"
                                 disabled={this.isFormInvalid()}>Register!</Button>
+                                <br></br>
+                                <br></br>
                                 Already a registered user? <Link to="/login">Login</Link>
+                        </div>        
                         </FormItem>
                     </Form>
                     </div>

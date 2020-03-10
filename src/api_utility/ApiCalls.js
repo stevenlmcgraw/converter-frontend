@@ -23,6 +23,7 @@ const request = async (options) => {
     );
 };
 
+//registration and login functions
 export function login(loginRequest) {
     return request({
         url: API_BASE_URL + "/auth/login",
@@ -50,5 +51,13 @@ export function checkEmailAvailability(email) {
     return request({
         url: API_BASE_URL + "/auth/getEmailAvailability?email=" + email,
         method: 'GET'
+    });
+}
+
+//result history functions
+export function saveResultHistoryObject(resultHistory) {
+    return request({
+        url: API_BASE_URL + "/resultHistory?resultHistory=" + resultHistory,
+        method: 'POST'
     });
 }

@@ -55,7 +55,6 @@ class LoginForm extends React.Component {
                             size="large"
                             name="username"
                             placeholder="Enter Username" />
-
                     )
                 }
                 </FormItem>
