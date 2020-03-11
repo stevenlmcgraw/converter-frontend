@@ -54,6 +54,17 @@ export function checkEmailAvailability(email) {
     });
 }
 
+export function getCurrentUser() {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token! Better get one.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/auth/currentUser",
+        method: 'GET'
+    });
+}
+
 //result history functions
 export function saveResultHistoryObject(resultHistory) {
     return request({

@@ -3,9 +3,9 @@ import LoginForm from '../../components/SiteUser/LoginForm';
 
 class Login extends React.Component {
     
-    onLogin = () => {
-        this.props.history.push("/");
-    }
+    // onLogin = () => {
+    //     this.props.history.push("/");
+    // }
 
     render() {
         
@@ -14,7 +14,7 @@ class Login extends React.Component {
                 <h1>Login!</h1>
                 <br></br>
                 <div>
-                    <LoginForm onLogin={this.onLogin}/>
+                    <LoginForm onLogin={this.props.onLogin}/>
                                           
                 </div>
             </div>

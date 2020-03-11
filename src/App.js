@@ -13,8 +13,55 @@ import Register from './components/SiteUser/Register';
 import Login from './components/SiteUser/Login';
 import ConvertLanding from './components/Layout/ConvertLanding';
 import CalculateLanding from './components/Layout/CalculateLanding';
+import { getCurrentUser } from './api_utility/ApiCalls';
+import { notification } from 'antd';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: null,
+      isAuthenticated: false,
+      isLoading: false
+    }
+
+    notification.config({
+      placement: 'topRight',
+      top: 80,
+      duration: 3
+    });
+  }
+
+  loadCurrentUser = () => {
+    this.setState({
+      isLoading: true
+    });
+    getCurrentUser()
+    .then(response => {
+      this.setState({
+        currentUser: response,
+        isAuthenticated: true,
+        isLoading: false
+      });
+    }).catch(error => {
+      this.setState({
+        isLoading: false
+      });
+    });
+  }
+
+  componentDidMount() {
+    this.loadCurrentUser();
+  }
+
+  handleLogin = () => {
+    notification.success({
+      message: 'Saturn Hotdog Calculator',
+      description: "Congratulations! You logged in."
+    });
+    this.loadCurrentUser();
+    this.props.history.push("/");
+  }
 
   render() {
 
@@ -35,7 +82,8 @@ class App extends React.Component {
                 <Route exact path="/convert" component={ConvertLanding} />
                 <Route exact path="/calculate" component={CalculateLanding} />
                 <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} />
+                <Route path="/login" render={(props) => 
+                  <Login onLogin={this.handleLogin} {...props}/>}></Route>
                 <Route exact path="/quadraticFormula" component={QuadraticFormula} />
                 <Route exact path="/poundmassToPoundforce" component={PoundMassToPoundForce} />
                 
