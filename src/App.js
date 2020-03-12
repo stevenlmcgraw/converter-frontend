@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+import "bootswatch/dist/flatly/bootstrap.min.css";
+//import './App.css';
 import AppHeader from "./components/Layout/AppHeader";
 import Landing from "./components/Layout/Landing";
 import { Route, Switch, withRouter } from "react-router-dom";
@@ -91,14 +92,14 @@ class App extends React.Component {
       return <LoadingIndicator />
     }
       return (
-        <Layout className="app-container">
+        <Layout>
             <AppHeader 
               isAuthenticated={this.state.isAuthenticated}
               currentUser={this.state.currentUser}
               onLogout={this.handleLogout}
             />
-              <Content className="app-content">
-              <div className="container">
+              <Content className="container-fluid">
+              <div>
               <Switch>
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/convert" component={ConvertLanding} />

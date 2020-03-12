@@ -1,13 +1,23 @@
 import React from "react";
-import { Menu, Icon, Dropdown, Layout } from "antd";
+import { Menu, Icon, Layout } from "antd";
 import { Link, withRouter } from "react-router-dom";
-import './AppHeader.css';
+//import { Dropdown } from 'react-dropdown';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, 
+    Nav, NavItem, NavLink, Dropdown, DropdownToggle, 
+    DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTh } from '@fortawesome/free-solid-svg-icons';
+import "bootswatch/dist/flatly/bootstrap.min.css";
+//import './AppHeader.css';
 
 const Header = Layout.Header;
 
 class AppHeader extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showProfileDropdown: false
+        };
     }
 
     handleMenuClick = ({ key }) => {
@@ -16,60 +26,79 @@ class AppHeader extends React.Component {
         }
     }
 
+    handleLogout = () => {
+        this.props.onLogout();
+    }
+
+    toggle = () => {
+        this.setState({
+            showProfileDropdown: true
+        });
+    }
+
+
     render() {
         let menuItems;
+        let dropdownTitle = "";
         if(this.props.currentUser) {
+            dropdownTitle = this.props.currentUser.username;
             menuItems = [
-                <Menu.Item key="/">
-                    <Link to="/">
-                        <Icon type="home" className="nav-icon"/>
-                    </Link>
-                </Menu.Item>,
-                <Menu.Item key="/profile" className="profile-menu">
-                    <UserProfileDropdownMenu
-                        currentUser={this.props.currentUser}
-                        handleMenuClick={this.handleMenuClick}/>
-                </Menu.Item>
+                
+            <DropdownItem className="dropdown-item text-center">
+                <Link  
+                to={`/profile/${this.props.currentUser.username}`}>Profile</Link>
+            </DropdownItem>,
+            <DropdownItem onClick={this.handleLogout} className="dropdown-item text-center">
+                <Link to="/">Logout!</Link>
+            </DropdownItem>
             ];
         }
         else {
+            dropdownTitle = "Login/Register";
             menuItems = [
-                <Menu.Item key="/login">
+                <DropdownItem className="dropdown-item text-center" >
                     <Link to="/login">Login!</Link>
-                </Menu.Item>,
-                <Menu.Item key="/register">
+                </DropdownItem>,
+                <DropdownItem className="dropdown-item text-center" >
                     <Link to="/register">Register!</Link>
-                </Menu.Item>
+                </DropdownItem>
             ];
         }
 
         return (
-            <Header className="app-header">
-            <div className="container">
-                <div className="app-title">
-                    <Link to="/">Saturn Hotdog Super Calculator</Link>
-                </div>
-            <Menu
-                className="app-menu"
-                mode="horizontal"
-                selectedKeys={[this.props.location.pathname]}
-                style={{ lineHeight: '64px' }} >
-                {menuItems}
-            </Menu>
+            <div>
+            <Navbar className="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div className="nav nav-pills">
+                    <NavbarBrand className="navbar-brand" 
+                    href="/">Saturn Hotdog Super Calculator</NavbarBrand>
+            
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.showProfileDropdown} navbar>
+                <Nav navbar>
+
+                <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                        {dropdownTitle}
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                        {menuItems}
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+                </Nav>
+            </Collapse>
+
+            
             </div>
-            </Header>
+            </Navbar>
+            </div>
         );
     }
 }
 
 function UserProfileDropdownMenu(props) {
     const dropdownMenu = (
-        <Menu onClick={props.handleMenuClick} className="profile-dropdown-menu">
-            <Menu.Item key="user-info" className="dropdown-item" disabled>
-                <div className="username-info">
-                    @{props.currentUser.username}
-                </div>
-            </Menu.Item>
+        <Menu onClick={props.handleMenuClick} >
+            
             <Menu.Divider />
             <Menu.Item key="profile" className="dropdown-item">
                 <Link to={`/profile/${props.currentUser.username}`}>Profile</Link>
@@ -82,6 +111,7 @@ function UserProfileDropdownMenu(props) {
 
     return (
         <Dropdown
+            className="dropdown-menu"
             overlay={dropdownMenu}
             trigger={['click']}
             getPopupContainer = { () => document.getElementsByClassName('profile-menu')[0]}>
