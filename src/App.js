@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Header from "./components/Layout/Header";
+import AppHeader from "./components/Layout/AppHeader";
 import Landing from "./components/Layout/Landing";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -14,7 +14,12 @@ import Login from './components/SiteUser/Login';
 import ConvertLanding from './components/Layout/ConvertLanding';
 import CalculateLanding from './components/Layout/CalculateLanding';
 import { getCurrentUser } from './api_utility/ApiCalls';
-import { notification } from 'antd';
+import { Layout, notification } from 'antd';
+import { ACCESS_TOKEN } from './constants';
+import UserProfile from "./components/SiteUser/UserProfile";
+import LoadingIndicator from './components/Utilities/LoadingIndicator';
+
+const { Content } = Layout;
 
 class App extends React.Component {
   constructor(props) {
@@ -27,7 +32,7 @@ class App extends React.Component {
 
     notification.config({
       placement: 'topRight',
-      top: 80,
+      top: 70,
       duration: 3
     });
   }
@@ -56,45 +61,67 @@ class App extends React.Component {
 
   handleLogin = () => {
     notification.success({
-      message: 'Saturn Hotdog Calculator',
+      message: 'Saturn Hotdog Super Calculator',
       description: "Congratulations! You logged in."
     });
     this.loadCurrentUser();
     this.props.history.push("/");
   }
 
-  render() {
+  handleLogout = (redirectTo="/", 
+  notificationType="success", 
+  description="You did it - you're logged out.") => {
+    localStorage.removeItem(ACCESS_TOKEN);
 
+    this.setState({
+      currentUser: null,
+      isAuthenticated: false
+    });
+
+    this.props.history.push(redirectTo);
+
+    notification[notificationType]({
+      message: 'Saturn Hotdog Super Calculator',
+      description: description
+    });
+  }
+
+  render() {
+    if(this.state.isLoading) {
+      return <LoadingIndicator />
+    }
       return (
-        <Provider store={store}>
-        <Router>
-          <div className="App">
-            <Header />
-            <div className="container">
-              {
-                //The <Switch> will iterate over its children elements (the routes) and only render the first one that matches the current pathname.
-                /*
-              if you dont put switch, it will all render together inclusively
-              */
-              }
+        <Layout className="app-container">
+            <AppHeader 
+              isAuthenticated={this.state.isAuthenticated}
+              currentUser={this.state.currentUser}
+              onLogout={this.handleLogout}
+            />
+              <Content className="app-content">
+              <div className="container">
               <Switch>
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/convert" component={ConvertLanding} />
                 <Route exact path="/calculate" component={CalculateLanding} />
                 <Route exact path="/register" component={Register} />
                 <Route path="/login" render={(props) => 
-                  <Login onLogin={this.handleLogin} {...props}/>}></Route>
+                  <Login onLogin={this.handleLogin} {...props} />}></Route>
+                <Route path="/profile/:username"
+                  render={(props) => 
+                    <UserProfile isAuthenticated={this.state.isAuthenticated}
+                          currentUser={this.state.currentUser}
+                          {...props} />
+                  }></Route>
                 <Route exact path="/quadraticFormula" component={QuadraticFormula} />
                 <Route exact path="/poundmassToPoundforce" component={PoundMassToPoundForce} />
                 
                 <Route component={NotFound} />
               </Switch>
-            </div>
-          </div>
-        </Router>
-      </Provider>
+              </div>
+              </Content>
+      </Layout>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

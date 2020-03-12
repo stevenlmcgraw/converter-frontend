@@ -1,12 +1,12 @@
 import { ACCESS_TOKEN, API_BASE_URL } from "../constants/index";
 
-const request = async (options) => {
+const request = (options) => {
     const headers = new Headers({
         'Content-Type' : 'application/json',
     })
 
     if(localStorage.getItem(ACCESS_TOKEN)) {
-        headers.append('Authoriation', 'Bearer ', 
+        headers.append('Authorization', 'Bearer ' 
         + localStorage.getItem(ACCESS_TOKEN))
     }
 
@@ -54,13 +54,21 @@ export function checkEmailAvailability(email) {
     });
 }
 
+//user and user profile functions
 export function getCurrentUser() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token! Better get one.");
     }
 
     return request({
-        url: API_BASE_URL + "/auth/currentUser",
+        url: API_BASE_URL + "/user/currentUser",
+        method: 'GET'
+    });
+}
+
+export function getUserProfile(username) {
+    return request({
+        url: API_BASE_URL + "/user/" + username,
         method: 'GET'
     });
 }

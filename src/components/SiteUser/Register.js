@@ -5,6 +5,7 @@ import { register, checkUsernameAvailability, checkEmailAvailability } from '../
 import { MIN_USERNAME_LENGTH, MAX_USERNAME_LENGTH, 
     MAX_EMAIL_LENGTH, MIN_PASSWORD_LENGTH, 
     MAX_PASSWORD_LENGTH, DEFAULT_SUCCESSFUL_REGISTER_MESSAGE} from '../../constants/index';
+import './Register.css';
 
 const FormItem = Form.Item;
 
@@ -65,11 +66,11 @@ class Register extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Register!</h1>
+            <div className="register-container">
+                <h1 className="page-title">Register!</h1>
                 <br></br>
-                    <div>
-                    <Form onSubmit={this.handleSubmit}>
+                    <div className="register-content">
+                    <Form onSubmit={this.handleSubmit} className="register-form">
                         <FormItem
                             hasFeedback
                             validateStatus={this.state.username.validateStatus}
@@ -87,7 +88,6 @@ class Register extends React.Component {
                         </FormItem>
                         <br></br>
                         <FormItem
-                            
                             hasFeedback
                             validateStatus={this.state.email.validateStatus}
                             help={this.state.email.errorMsg}>
@@ -125,6 +125,7 @@ class Register extends React.Component {
                                 type="primary"
                                 htmlType="submit"
                                 size="large"
+                                className="register-form-button"
                                 disabled={this.isFormInvalid()}>Register!</Button>
                                 <br></br>
                                 <br></br>

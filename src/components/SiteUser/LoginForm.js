@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { Form, Input, Button, Icon, notification } from 'antd';
 import { login } from '../../api_utility/ApiCalls';
 import { ACCESS_TOKEN } from '../../constants';
+import './Login.css';
 
 const FormItem = Form.Item;
 
@@ -44,7 +45,7 @@ class LoginForm extends React.Component {
 
         return(
             <div>
-            <Form onSubmit={this.handleSubmit}>
+            <Form onSubmit={this.handleSubmit} className="logiin-form">
                 <FormItem>
                     {getFieldDecorator('username', {
                         rules: [{ required: true, message: 'Please enter your username!' }],
@@ -80,6 +81,7 @@ class LoginForm extends React.Component {
                         type="primary"
                         htmlType="submit"
                         size="large"
+                        className="login-form-button"
                     >Login!</Button>
                     <br></br>
                     <br></br>

@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginForm from '../../components/SiteUser/LoginForm';
+import './Login.css';
 
 class Login extends React.Component {
     
@@ -10,10 +11,10 @@ class Login extends React.Component {
     render() {
         
         return(
-            <div>
-                <h1>Login!</h1>
+            <div className="login-container">
+                <h1 className="page-title">Login!</h1>
                 <br></br>
-                <div>
+                <div className="login-content">
                     <LoginForm onLogin={this.props.onLogin}/>
                                           
                 </div>
