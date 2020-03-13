@@ -1,13 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
 import "bootswatch/dist/flatly/bootstrap.min.css";
 //import './App.css';
 import AppHeader from "./components/Layout/AppHeader";
 import Landing from "./components/Layout/Landing";
 import { Route, Switch, withRouter } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
-import { Provider } from "react-redux";
-import store from "./store";
 import PoundMassToPoundForce from "./components/Conversions/PoundMassToPoundForce";
 import QuadraticFormula from './components/Calculations/QuadraticFormula';
 import Register from './components/SiteUser/Register';
@@ -49,7 +46,7 @@ class App extends React.Component {
         isAuthenticated: true,
         isLoading: false
       });
-    }).catch(error => {
+    }).catch(() => {
       this.setState({
         isLoading: false
       });
@@ -114,7 +111,13 @@ class App extends React.Component {
                           {...props} />
                   }></Route>
                 <Route exact path="/quadraticFormula" component={QuadraticFormula} />
-                <Route exact path="/poundmassToPoundforce" component={PoundMassToPoundForce} />
+                <Route path="/poundmassToPoundforce" 
+                  render={(props) => 
+                  <PoundMassToPoundForce
+                    isAuthenticated={this.state.isAuthenticated}
+                    currentUser={this.state.currentUser}
+                    {...props} />
+                  }></Route>
                 
                 <Route component={NotFound} />
               </Switch>

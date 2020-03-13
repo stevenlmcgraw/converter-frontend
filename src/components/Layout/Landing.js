@@ -8,8 +8,8 @@ export class Landing extends React.Component {
         return (
         <div className="container">
         {
-              <div className="jumbotron">
-              <h1 className="text-center">Choose Your Own Adventure</h1>
+              <div className="jumbotron-fluid">
+              <h1 className="text-center text-secondary font-weight-bold">Choose Your Own Adventure</h1>
                 <hr />
                 <div className="col-auto text-center">
                 <Link className="btn btn-lg btn-primary mr-2" to="/convert">

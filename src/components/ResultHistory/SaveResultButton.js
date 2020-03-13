@@ -1,17 +1,38 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button } from 'reactstrap';
 
 class SaveResultButton extends React.Component {
+constructor(props) {
+    super(props);
+    this.state = {
+
+    }
+}
+
     render() {
-        <div>
+        let saveButton;
+        let isLoggedIn = this.props.currentUser;
+        if(isLoggedIn) {
+            saveButton = [
+                <div>
             <React.Fragment>
                 <Button
-                    type="primary"
-                    htmlType="submit"
-                    size="large"
+                    onClick={this.props.onClick}
+                    type="button"
+                    className="btn-dark btn-outline-primary btn-lg btn-primary mr-2"
                 >Save Result!</Button>
             </React.Fragment>
         </div>
+        ];
+        }
+        else {
+            saveButton = null;
+        }
+        return (
+        <div>
+        {saveButton}
+        </div>
+    );
     }
 }
 

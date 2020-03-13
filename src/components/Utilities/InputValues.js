@@ -15,7 +15,7 @@ class InputValues extends React.Component {
 
     render() {
         return (
-            <fieldset>
+            <fieldset className="text-dark">
                 <legend>Enter value for {this.props.variableName}: </legend>
                 <input value={this.props.inputValue}
                         onChange={this.handleChange} />
