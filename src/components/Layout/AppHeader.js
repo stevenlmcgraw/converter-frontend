@@ -1,16 +1,10 @@
 import React from "react";
-import { Menu, Icon, Layout } from "antd";
 import { Link, withRouter } from "react-router-dom";
-//import { Dropdown } from 'react-dropdown';
+import { PropTypes } from 'prop-types';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, 
     Nav, NavItem, NavLink, Dropdown, DropdownToggle, 
     DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTh } from '@fortawesome/free-solid-svg-icons';
 import "bootswatch/dist/flatly/bootstrap.min.css";
-//import './AppHeader.css';
-
-const Header = Layout.Header;
 
 class AppHeader extends React.Component {
     constructor(props) {
@@ -20,30 +14,22 @@ class AppHeader extends React.Component {
         };
     }
 
-    handleMenuClick = ({ key }) => {
-        if(key === "logout") {
-            this.props.onLogout();
-        }
-    }
-
     handleLogout = () => {
         this.props.onLogout();
     }
 
     toggle = () => {
         this.setState({
-            showProfileDropdown: true
+            showProfileDropdown: !this.state.showProfileDropdown
         });
     }
-
 
     render() {
         let menuItems;
         let dropdownTitle = "";
         if(this.props.currentUser) {
             dropdownTitle = this.props.currentUser.username;
-            menuItems = [
-                
+            menuItems = [             
             <DropdownItem className="dropdown-item text-center">
                 <Link  
                 to={`/profile/${this.props.currentUser.username}`}>Profile</Link>
@@ -70,24 +56,23 @@ class AppHeader extends React.Component {
             <Navbar className="navbar navbar-expand-lg navbar-dark bg-primary">
             <div className="nav nav-pills">
                     <NavbarBrand className="navbar-brand" 
-                    href="/">Saturn Hotdog Super Calculator</NavbarBrand>
-            
-            <NavbarToggler onClick={this.toggle} />
+                    href="/">Saturn Hotdog Super Calculator</NavbarBrand>          
+            <NavbarToggler />
             <Collapse isOpen={this.state.showProfileDropdown} navbar>
                 <Nav navbar>
-
-                <UncontrolledDropdown nav inNavbar>
+                <Dropdown isOpen={this.state.showProfileDropdown} 
+                toggle={this.toggle}
+                nav inNavbar right
+                className="dropdown-menu-right">
                     <DropdownToggle nav caret>
                         {dropdownTitle}
                     </DropdownToggle>
-                    <DropdownMenu right>
+                    <DropdownMenu right className="dropdown-menu-right">
                         {menuItems}
                     </DropdownMenu>
-                </UncontrolledDropdown>
+                </Dropdown>
                 </Nav>
-            </Collapse>
-
-            
+            </Collapse>  
             </div>
             </Navbar>
             </div>
@@ -95,31 +80,12 @@ class AppHeader extends React.Component {
     }
 }
 
-function UserProfileDropdownMenu(props) {
-    const dropdownMenu = (
-        <Menu onClick={props.handleMenuClick} >
-            
-            <Menu.Divider />
-            <Menu.Item key="profile" className="dropdown-item">
-                <Link to={`/profile/${props.currentUser.username}`}>Profile</Link>
-            </Menu.Item>
-            <Menu.Item key="logout" className="dropdown-item">
-                Logout
-            </Menu.Item>
-        </Menu>
-    );
+DropdownMenu.propTypes = {
+    right: PropTypes.bool
+}
 
-    return (
-        <Dropdown
-            className="dropdown-menu"
-            overlay={dropdownMenu}
-            trigger={['click']}
-            getPopupContainer = { () => document.getElementsByClassName('profile-menu')[0]}>
-        <a className="ant-dropdown-link">
-            <Icon type="user" className="nav-icon" style={{marginRight: 0}} /> <Icon type="down" />
-        </a>
-        </Dropdown>
-    );
+Dropdown.propTypes = {
+    right: PropTypes.bool
 }
 
 export default withRouter(AppHeader);
