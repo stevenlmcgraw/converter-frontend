@@ -110,7 +110,13 @@ class App extends React.Component {
                           currentUser={this.state.currentUser}
                           {...props} />
                   }></Route>
-                <Route exact path="/quadraticFormula" component={QuadraticFormula} />
+                <Route exact path="/quadraticFormula" 
+                  render={(props) =>
+                  <QuadraticFormula
+                  isAuthenticated={this.state.isAuthenticated}
+                  currentUser={this.state.currentUser}
+                  {...props} />
+                  }></Route>
                 <Route path="/poundmassToPoundforce" 
                   render={(props) => 
                   <PoundMassToPoundForce

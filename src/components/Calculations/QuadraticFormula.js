@@ -1,16 +1,21 @@
 import React from "react";
 import InputValues from "../Utilities/InputValues";
 import {Decimal} from 'decimal.js';
+import SaveResult from '../ResultHistory/SaveResult';
+import { withRouter } from "react-router-dom";
 
 class QuadraticFormula extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            a: Decimal,
-            b: Decimal,
-            c: Decimal,
-            x1: Decimal,
-            x2: Decimal,
+            componentMounted: false,
+            variablesUsed: {
+                a: Decimal,
+                b: Decimal,
+                c: Decimal,
+                x1: Decimal,
+                x2: Decimal
+            },
             variableNames: {
                 coefA: 'Coefficient A',
                 coefB: 'Coefficient B',
@@ -18,6 +23,30 @@ class QuadraticFormula extends React.Component {
             }
         }
     }
+
+    componentDidMount() {
+        this.setState({
+            componentMounted: !this.state.componentMounted
+        });
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            componentMounted: !this.state.componentMounted
+        });
+    }
+
+    mapVariableNamesToProps = async () => { 
+        this.setState({
+            variablesUsed : {
+                a : this.state.a,
+                b : this.state.b,
+                c : this.state.c,
+                x1: this.state.x1,
+                x2: this.state.x2
+            }
+        })
+      };
 
     handleChangeA = async (inputValue) => {
         await this.setState({a: inputValue});
@@ -47,13 +76,13 @@ class QuadraticFormula extends React.Component {
             x1: result1,
             x2: result2
         });
-
+        this.mapVariableNamesToProps();
     }
 
     render() {
         return (
             <div>
-                <div>
+                <div className="jumbotron text-center">
                     <InputValues 
                     variableName={this.state.variableNames.coefA}
                     inputValue={this.props.a}
@@ -69,11 +98,15 @@ class QuadraticFormula extends React.Component {
                     inputValue={this.props.c}
                     onVariableChange={this.handleChangeC}
                     />
-                </div>
-
-                <div>
+                
+                <div className="text-success font-weight-bolder">
                     <br></br>
                     <p>Result:<br></br>x = {this.state.x1}<br></br>x = {this.state.x2}</p>
+                    <SaveResult currentUser={this.props.currentUser}
+                                variablesUsed={this.state.variablesUsed}
+                                variableNames={this.state.variableNames}
+                    />
+                </div>
                 </div>
             </div>
         );
@@ -81,4 +114,4 @@ class QuadraticFormula extends React.Component {
 
     }
 
-export default QuadraticFormula;
+export default withRouter(QuadraticFormula);

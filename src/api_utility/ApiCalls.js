@@ -76,7 +76,8 @@ export function getUserProfile(username) {
 //result history functions
 export function saveResultHistoryObject(resultHistory) {
     return request({
-        url: API_BASE_URL + "/resultHistory?resultHistory=" + resultHistory,
-        method: 'POST'
+        url: API_BASE_URL + "/resultHistory",
+        method: 'POST',
+        body: JSON.stringify(resultHistory)
     });
 }
