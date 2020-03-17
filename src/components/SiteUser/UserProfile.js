@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { Avatar, Tabs } from 'antd';
 import { getUserProfile } from '../../api_utility/ApiCalls';
 import './UserProfile.css';
@@ -12,10 +13,10 @@ class UserProfile extends React.Component {
         this.state = {
             siteUser: null,
             isLoading: false
-        }
+        };
     }
 
-    loadUserProfile(username) {
+    loadUserProfile = (username) => {
         this.setState({
             isLoading: true
         });
@@ -42,7 +43,7 @@ class UserProfile extends React.Component {
         });
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         const username = this.props.match.params.username;
         this.loadUserProfile(username);
     }
@@ -55,6 +56,9 @@ class UserProfile extends React.Component {
     }
 
     render() {
+        console.log('UserProfile');
+        console.log(this.props.currentUser);
+        console.log(this.props);
         if(this.state.isLoading) {
             return <LoadingIndicator />;
         }
@@ -94,4 +98,4 @@ class UserProfile extends React.Component {
     }
 }
 
-export default UserProfile;
+export default withRouter(UserProfile);

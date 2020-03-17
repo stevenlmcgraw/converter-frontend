@@ -85,10 +85,10 @@ class SaveResult extends React.Component {
     }
 
     render() {
-        console.log(this.props);
-        console.log(this.props.variablesUsed);
-        console.log(this.props.currentUser);
-        console.log(this.state.resultHistory);
+        // console.log(this.props);
+        // console.log(this.props.variablesUsed);
+        // console.log(this.props.currentUser);
+        // console.log(this.state.resultHistory);
         return(
             <div>
             <React.Fragment>

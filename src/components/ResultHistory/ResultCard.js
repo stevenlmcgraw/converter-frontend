@@ -7,19 +7,20 @@ import {
     Form, FormGroup, Label, Input, FormText, 
     ModalFooter, ListGroup, ListGroupItem
   } from 'reactstrap';
+  import Result from '../ResultHistory/Result';
 
 class ResultCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             modalOpen: false,
-            resultHistory: {
-                username: '',
-                title: '',
-                message: '',
-                entryDate: new Date(),
-                calculationAttributes: {}
-                }
+            // resultHistory: {
+            //     username: '',
+            //     title: '',
+            //     message: '',
+            //     entryDate: new Date(),
+            //     calculationAttributes: {}
+            //     }
         }
 
     }
@@ -44,27 +45,24 @@ class ResultCard extends React.Component {
                     <CardText>
                         {this.props.resultHistory.message ? cardMessage : 'No Message!'}
                     </CardText>
+                    
                     <Button onClick={this.toggle}>View It!</Button>
+                    
                     <Modal isOpen={this.state.modalOpen}
                             toggle={this.toggle}>
 
-                        <ModalHeader>Upon Closer Inspection</ModalHeader>
+                        <ModalHeader toggle={this.toggle}>Upon Closer Inspection</ModalHeader>
                             <ModalBody>
-                            <ListGroup>
-                                <ListGroupItem>Title: {cardTitle}</ListGroupItem>
-                                <ListGroupItem>Description: {cardMessage}</ListGroupItem>
-                                <ListGroupItem>Date: `${this.props.resultHistory.entryDate}`</ListGroupItem>
-                                <ListGroupItem>Values: `${this.props.resultHistory.calculationAttributes}</ListGroupItem>
-                            </ListGroup>
+                            <Result resultHistory={this.props.resultHistory}/>
                             </ModalBody>
                             <ModalFooter>
-                                <Button>Text File</Button>
-                                <Button>Update</Button>
-                                <Button>Delete</Button>
-                                <Button>Go to Formula</Button>
+                                <Button onClick={this.toggle}>Text File</Button>
+                                <Button onClick={this.toggle}>Update</Button>
+                                <Button onClick={this.toggle}>Delete</Button>
+                                <Button onClick={this.toggle}>Go to Formula</Button>
                             </ModalFooter>
                     </Modal>
-                </Card>
+                    </Card>
             </React.Fragment>    
             </div>
         )

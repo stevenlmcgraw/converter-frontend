@@ -5,6 +5,7 @@ import AppHeader from "./components/Layout/AppHeader";
 import Landing from "./components/Layout/Landing";
 import { Route, Switch, withRouter } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
+import ResultHistoryLanding from "./components/ResultHistory/ResultHistoryLanding";
 import PoundMassToPoundForce from "./components/Conversions/PoundMassToPoundForce";
 import QuadraticFormula from './components/Calculations/QuadraticFormula';
 import Register from './components/SiteUser/Register';
@@ -16,7 +17,6 @@ import { Layout, notification } from 'antd';
 import { ACCESS_TOKEN } from './constants';
 import UserProfile from "./components/SiteUser/UserProfile";
 import LoadingIndicator from './components/Utilities/LoadingIndicator';
-import ResultHistoryLanding from './components/ResultHistory/ResultHistoryLanding';
 
 const { Content } = Layout;
 
@@ -36,6 +36,10 @@ class App extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.loadCurrentUser();
+  }
+
   loadCurrentUser = () => {
     this.setState({
       isLoading: true
@@ -52,10 +56,6 @@ class App extends React.Component {
         isLoading: false
       });
     });
-  }
-
-  componentDidMount() {
-    this.loadCurrentUser();
   }
 
   handleLogin = () => {
@@ -104,27 +104,35 @@ class App extends React.Component {
                 <Route exact path="/calculate" component={CalculateLanding} />
                 <Route exact path="/register" component={Register} />
                 <Route path="/login" render={(props) => 
-                  <Login onLogin={this.handleLogin} {...props} />}></Route>
+                  <Login 
+                    onLogin={this.handleLogin} 
+                    {...props} />
+                }></Route>
+                
                 <Route path="/profile/:username"
                   render={(props) => 
-                    <UserProfile isAuthenticated={this.state.isAuthenticated}
-                          currentUser={this.state.currentUser}
-                          {...props} />
+                  <UserProfile 
+                    isAuthenticated={this.state.isAuthenticated}
+                    currentUser={this.state.currentUser}
+                    {...props} />
                   }></Route>
-                <Route path="/resultHistory"
-                        render={(props) =>
-                        <ResultHistoryLanding 
-                          isAuthenticated={this.state.isAuthenticated}
-                          currentUser={this.state.currentUser}
-                          {...props} />
-                        }></Route>
+
+                <Route exact path="/resultHistory"
+                  render={(props) =>
+                  <ResultHistoryLanding 
+                    isAuthenticated={this.state.isAuthenticated}
+                    currentUser={this.state.currentUser}
+                    {...props}></ResultHistoryLanding>
+                  }></Route>
+
                 <Route exact path="/quadraticFormula" 
                   render={(props) =>
                   <QuadraticFormula
-                  isAuthenticated={this.state.isAuthenticated}
-                  currentUser={this.state.currentUser}
-                  {...props} />
+                    isAuthenticated={this.state.isAuthenticated}
+                    currentUser={this.state.currentUser}
+                    {...props} />
                   }></Route>
+
                 <Route path="/poundmassToPoundforce" 
                   render={(props) => 
                   <PoundMassToPoundForce
@@ -134,6 +142,7 @@ class App extends React.Component {
                   }></Route>
                 
                 <Route component={NotFound} />
+
               </Switch>
               </div>
               </Content>

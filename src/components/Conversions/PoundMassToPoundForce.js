@@ -66,7 +66,9 @@ class PoundMassToPoundForce extends React.Component {
     };
 
     render() {
-
+        console.log('PoundMass');
+        console.log(this.props.currentUser);
+        console.log(this.props);
         return (
             
             <div>

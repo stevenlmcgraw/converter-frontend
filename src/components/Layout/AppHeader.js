@@ -35,6 +35,10 @@ class AppHeader extends React.Component {
                 <Link  
                 to={`/profile/${this.props.currentUser.username}`}>Profile</Link>
             </DropdownItem>,
+            <DropdownItem className="navbar-dropdown-item text-center">
+                <Link  
+                to="/resultHistory">Result History</Link>
+            </DropdownItem>,
             <DropdownItem onClick={this.handleLogout} className="navbar-dropdown-item text-center">
                 <Link to="/">Logout!</Link>
             </DropdownItem>

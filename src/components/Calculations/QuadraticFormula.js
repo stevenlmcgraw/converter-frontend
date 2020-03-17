@@ -80,6 +80,8 @@ class QuadraticFormula extends React.Component {
     }
 
     render() {
+        // console.log('QuadraticFormula');
+        // console.log(this.props);
         return (
             <div>
                 <div className="jumbotron text-center">
