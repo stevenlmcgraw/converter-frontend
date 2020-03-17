@@ -16,6 +16,7 @@ import { Layout, notification } from 'antd';
 import { ACCESS_TOKEN } from './constants';
 import UserProfile from "./components/SiteUser/UserProfile";
 import LoadingIndicator from './components/Utilities/LoadingIndicator';
+import ResultHistoryLanding from './components/ResultHistory/ResultHistoryLanding';
 
 const { Content } = Layout;
 
@@ -110,6 +111,13 @@ class App extends React.Component {
                           currentUser={this.state.currentUser}
                           {...props} />
                   }></Route>
+                <Route path="/resultHistory"
+                        render={(props) =>
+                        <ResultHistoryLanding 
+                          isAuthenticated={this.state.isAuthenticated}
+                          currentUser={this.state.currentUser}
+                          {...props} />
+                        }></Route>
                 <Route exact path="/quadraticFormula" 
                   render={(props) =>
                   <QuadraticFormula

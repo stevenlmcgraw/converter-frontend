@@ -81,3 +81,14 @@ export function saveResultHistoryObject(resultHistory) {
         body: JSON.stringify(resultHistory)
     });
 }
+
+export function getAllUsernameResultHistory(username) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token! Better get one.");
+    }
+    
+    return request({
+        url: API_BASE_URL + "/resultHistory/" + username,
+        method: 'GET'
+    });
+}
