@@ -1,12 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button,
+    Card, CardText, CardTitle, Button,
     ModalHeader, ModalBody, Modal,
-    Form, FormGroup, Label, Input, FormText, 
-    ModalFooter, ListGroup, ListGroupItem
-  } from 'reactstrap';
+    ModalFooter  } from 'reactstrap';
   import Result from '../ResultHistory/Result';
 
 class ResultCard extends React.Component {

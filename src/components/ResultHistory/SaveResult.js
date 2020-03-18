@@ -3,8 +3,7 @@ import { PropTypes } from 'prop-types';
 import SaveResultButton from '../ResultHistory/SaveResultButton';
 import { withRouter } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, 
-    Form, FormGroup, Label, Input, FormText, 
-    ModalFooter } from 'reactstrap';
+    Form, FormGroup, Label, Input, ModalFooter } from 'reactstrap';
 import { notification } from 'antd';
 import { saveResultHistoryObject } from '../../api_utility/ApiCalls';
 
@@ -69,7 +68,7 @@ class SaveResult extends React.Component {
         event.preventDefault();
 
         saveResultHistoryObject(this.state.resultHistory)
-        .then(response => {
+        .then(() => {
             notification.success({
                 message: 'Saturn Hotdog Super Calculator',
                 description: 'This calculation has been saved!'

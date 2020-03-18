@@ -1,8 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { CardGroup } from 'reactstrap';
+import { CardGroup, Alert, Card, CardTitle, CardText } from 'reactstrap';
 import { getAllUsernameResultHistory } from '../../api_utility/ApiCalls';
 import ResultCard from '../../components/ResultHistory/ResultCard';
+import { notification } from 'antd';
 
 class ResultHistoryLanding extends React.Component {
     constructor(props) {
@@ -34,15 +35,23 @@ class ResultHistoryLanding extends React.Component {
     }
     
     fetchUsernameResultHistory = () => {
-        //event.preventDefault();
-        
 
         getAllUsernameResultHistory(this.props.currentUser.username)
         .then(response => {
+            if(response.status === 204) {
+                this.setState({
+                    resultHistories: []
+                })
+            }
             this.setState({
                 resultHistories: response._embedded.resultHistories,
             });
-        });   
+        }).catch(error => {
+            notification.error({
+                message: 'Saturn Hotdog Super Calculator',
+                description: 'Oh no!!! No conversion/calculation result history present.' || error.message
+            });   
+        });
     }
 
     render() {
@@ -50,11 +59,26 @@ class ResultHistoryLanding extends React.Component {
         console.log(this.props.currentUser);
         console.log(this.props);
         console.log(this.state.resultHistories);
-        const results = (this.state.resultHistories).map(resultHistory => 
-            <ResultCard 
-                key={resultHistory._links.self.href}
-                resultHistory={resultHistory} />   
-        );
+
+        let results;
+
+        if(this.state.resultHistories.length === 0) {
+            results = (
+                <Card body outline color="success" className="text-center">
+                    <CardTitle>No History!</CardTitle>
+                    <CardText>Looks like we don't have any history together... 
+                                but we can work on that. Get out there and do 
+                                some conversions and calculations!</CardText>
+                </Card>
+            );
+        }
+        else {
+            results = (this.state.resultHistories).map(resultHistory => 
+                <ResultCard 
+                    key={resultHistory._links.self.href}
+                    resultHistory={resultHistory} />   
+            );
+        }
         return (
             <div className="jumbotron-fluid">
                 <CardGroup>{results}</CardGroup>
