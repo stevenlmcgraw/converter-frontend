@@ -13,16 +13,8 @@ class ResultCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalOpen: false,
-            // resultHistory: {
-            //     username: '',
-            //     title: '',
-            //     message: '',
-            //     entryDate: new Date(),
-            //     calculationAttributes: {}
-            //     }
+            modalOpen: false
         }
-
     }
 
     toggle = () => {
