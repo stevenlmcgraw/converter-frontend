@@ -11,7 +11,7 @@ export class ConvertLanding extends React.Component {
               <div className="col-md-12 text-center">
                 <h1 className="display-3 mb-4">Convert!</h1>
                 <hr />
-                <Link className="btn btn-lg btn-primary mr-2" to="/poundmassToPoundforce">
+                <Link className="btn btn-lg btn-primary mr-2" to="/poundMassToPoundForce">
                   Pound Mass to Pound Force
                 </Link>
               </div>

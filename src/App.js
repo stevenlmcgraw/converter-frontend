@@ -133,7 +133,7 @@ class App extends React.Component {
                     {...props} />
                   }></Route>
 
-                <Route path="/poundmassToPoundforce" 
+                <Route path="/poundMassToPoundForce" 
                   render={(props) => 
                   <PoundMassToPoundForce
                     isAuthenticated={this.state.isAuthenticated}
