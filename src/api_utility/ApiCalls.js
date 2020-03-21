@@ -73,6 +73,31 @@ export function getUserProfile(username) {
     });
 }
 
+//favorites list
+export function addFormulaToFavoritesList(username, formulaName) {
+    return request({
+        url: API_BASE_URL + "/user/" + username 
+        + "/favorites/" + formulaName,
+        method: 'POST'
+    })
+}
+
+export function deleteFormulaFromFavoritesList(username, formulaName) {
+    return request ({
+        url: API_BASE_URL + "/user/" + username + 
+        "/favorites/delete/" + formulaName,
+        method: 'DELETE'
+    })
+}
+
+export function deleteAllFromFavoritesList(username) {
+    return request ({
+        url: API_BASE_URL + "/user/" + username + 
+        "/favorites/delete/",
+        method: 'DELETE'
+    })
+}
+
 //result history functions
 export function saveResultHistoryObject(resultHistory) {
     return request({
