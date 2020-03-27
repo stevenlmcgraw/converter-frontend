@@ -1,8 +1,7 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { saveUpdatedFavoritesOrder } from '../../api_utility/ApiCalls';
-import { getUserProfile } from '../../api_utility/ApiCalls';
-import { Form, Input, Button, Icon, notification } from 'antd';
+import { notification } from 'antd';
 
 class ManageFavoritesList extends React.Component {
     constructor(props) {
@@ -68,7 +67,7 @@ class ManageFavoritesList extends React.Component {
         });
 
         saveUpdatedFavoritesOrder(this.props.siteUser.username, formulaPositions)
-        .then(response => {
+        .then(() => {
             notification.success({
                 message: 'Saturn Hotdog Super Calculator',
                 description: 'New Order of Favorites Successful!'
@@ -102,7 +101,7 @@ class ManageFavoritesList extends React.Component {
             <React.Fragment>
             <DragDropContext onDragEnd={this.onDragEnd}>
                 <Droppable droppableId="droppable">
-                {(provided, snapshot) =>(
+                {(provided) =>(
                     <div
                         {...provided.droppableProps}
                         ref={provided.innerRef}
@@ -114,7 +113,7 @@ class ManageFavoritesList extends React.Component {
                                 draggableId={formula.formulaName}
                                 index={index}
                             >
-                            {(provided, snapshot) => (
+                            {(provided) => (
                                 <div
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}

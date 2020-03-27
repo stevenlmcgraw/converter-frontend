@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Avatar, Tabs } from 'antd';
 import { getUserProfile } from '../../api_utility/ApiCalls';
 import './UserProfile.css';
 import NotFound from '../Utilities/NotFound';
@@ -8,7 +7,6 @@ import LoadingIndicator from '../Utilities/LoadingIndicator';
 import ServerError from '../Utilities/ServerError';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
-//import ManageFavoritesList from '../SiteUser/ManageFavoritesList';
 
 const ManageFavoritesList = React.lazy(() => import('../SiteUser/ManageFavoritesList'));
 
