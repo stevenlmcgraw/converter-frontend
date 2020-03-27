@@ -23,35 +23,8 @@ class ManageFavoritesList extends React.Component {
         //this.loadUserProfile(username);
         //console.log(this.state.siteUser);
         this.setState({
-            favoritesList: this.props.siteUser.favoritesSet
+            favoritesList: this.props.siteUser.favoritesList
         })
-    }
-
-    loadUserProfile = (username) => {
-        this.setState({
-            isLoading: true
-        });
-
-        getUserProfile(username)
-        .then(response => {
-            this.setState({
-                siteUser: response,
-                isLoading: false
-            });
-        }).catch(error => {
-            if(error.status === 404) {
-                this.setState({
-                    notFound: true,
-                    isLoading: false
-                });
-            }
-            else {
-                this.setState({
-                    serverError: true,
-                    isLoading: false
-                });
-            }
-        });
     }
 
     onDragEnd = result => {
@@ -137,8 +110,8 @@ class ManageFavoritesList extends React.Component {
                     >
                         {this.state.favoritesList.map((formula, index) => (
                             <Draggable
-                                key={formula.position}
-                                draggableId={formula.position.toString()}
+                                key={formula.formulaName}
+                                draggableId={formula.formulaName}
                                 index={index}
                             >
                             {(provided, snapshot) => (
