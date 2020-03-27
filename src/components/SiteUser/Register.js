@@ -52,7 +52,8 @@ class Register extends React.Component {
         }).catch(error => {
             notification.error({
                 message: 'Saturn Hotdog Calculator',
-                description: error.message || 'Apologies, but something went awry. Try again please.'
+                description: error.message || 
+                'Apologies, but something went awry. Try again please.'
             });
         });
     }

@@ -2,6 +2,7 @@ import React from 'react';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { saveUpdatedFavoritesOrder } from '../../api_utility/ApiCalls';
 import { getUserProfile } from '../../api_utility/ApiCalls';
+import { Form, Input, Button, Icon, notification } from 'antd';
 
 class ManageFavoritesList extends React.Component {
     constructor(props) {
@@ -80,19 +81,38 @@ class ManageFavoritesList extends React.Component {
         this.setState({
             favoritesList
         });
+
+        this.saveOrder();
     }
 
-    // saveOrder = () => {
+    saveOrder = () => {
 
-    //     let { favoritesList } = this.state;
-    //     let formulaIds = [];
+        let { favoritesList } = this.state;
+        let formulaPositions = [];
 
-    //     favoritesList.forEach(formula => {
-    //         formulaIds.unshift(formula.id)
-    //     });
+        favoritesList.forEach(formula => {
+            formulaPositions.unshift(formula.formulaName)
+        });
 
+        saveUpdatedFavoritesOrder(this.props.siteUser.username, formulaPositions)
+        .then(response => {
+            notification.success({
+                message: 'Saturn Hotdog Super Calculator',
+                description: 'New Order of Favorites Successful!'
+            });
+        }).catch(error => {
+            notification.error({
+                message: 'Saturn Hotdog Calculator',
+                description: error.message || 
+                'Apologies, but something went awry. Try again please.'
+            });
+        });
 
-    // }
+        console.log('saveOrder()');
+        console.log(this.props.username);
+        console.log(favoritesList);
+        console.log(formulaPositions);
+    }
 
     // getListStyle = isDraggingOver => {
     //     background: "success",
@@ -103,6 +123,7 @@ class ManageFavoritesList extends React.Component {
     render() {
         console.log('ManageFavoritesList');
         console.log(this.props.siteUser);
+        console.log(this.props);
 
         return (
             <React.Fragment>
