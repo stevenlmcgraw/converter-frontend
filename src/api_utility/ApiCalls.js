@@ -98,6 +98,15 @@ export function deleteAllFromFavoritesList(username) {
     })
 }
 
+export function saveUpdatedFavoritesOrder(username, favoritesList) {
+    return request ({
+        url: API_BASE_URL + "/user/" + username + 
+        "/favorites/reorder",
+        method: 'PUT',
+        body: JSON.stringify(favoritesList)
+    })
+}
+
 //result history functions
 export function saveResultHistoryObject(resultHistory) {
     return request({

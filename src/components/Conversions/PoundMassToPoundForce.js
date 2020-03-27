@@ -72,7 +72,9 @@ class PoundMassToPoundForce extends React.Component {
         return (
             
             <div>
+            
             <div className="jumbotron text-center">
+            <h1 className="text-primary">Pound Mass to Pound Force</h1>
                 <InputValues
                 variableName={this.state.variableNames.pM}
                 inputValue={this.props.poundsMass}

@@ -85,6 +85,7 @@ class QuadraticFormula extends React.Component {
         return (
             <div>
                 <div className="jumbotron text-center">
+                <h1 className="text-primary">Quadratic Formula</h1>
                     <InputValues 
                     variableName={this.state.variableNames.coefA}
                     inputValue={this.props.a}
