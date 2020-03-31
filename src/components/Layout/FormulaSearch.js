@@ -4,7 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 import { PropTypes } from 'prop-types';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, 
     Nav, NavItem, NavLink, Dropdown, DropdownToggle, 
-    DropdownMenu, DropdownItem, UncontrolledDropdown, FormGroup, Input, Label } from 'reactstrap';
+    DropdownMenu, DropdownItem, UncontrolledDropdown, FormGroup, Input, Label, ListGroupItem } from 'reactstrap';
 import "bootswatch/dist/flatly/bootstrap.min.css";
 
 class FormulaSearch extends React.Component {
@@ -15,62 +15,6 @@ class FormulaSearch extends React.Component {
             suggestions: [],
             groupedList: []
         }
-    }
-
-    // componentDidMount() {
-    //     console.log('FormulaSearch didMount()');
-    //     this.assembleSuggestionsByCategory();
-    // }
-
-    componentDidUpdate(prevState, prevProps) {
-        console.log('FormulaSearch didUpdate()');
-        // if(this.state.groupedList !== prevState.groupedList) {
-        //     this.assembleSuggestionsByCategory();
-        // }
-        if(this.props.formulas !== prevProps.formulas) {
-            this.assembleSuggestionsByCategory();
-        }
-        // if(this.state.groupedList === undefined) {
-        //     this.assembleSuggestionsByCategory();
-        // }
-
-        // if(this.state.groupedList !== undefined && 
-        //     this.state.groupedList.length === 0) {
-        //     this.assembleSuggestionsByCategory();
-        // }
-    }
-
-    assembleSuggestionsByCategory = () => {
-        // let category = {
-        //     title: '',
-        //     formulas: []
-        // };
-
-        let tempArray = [];
-        let groupedByTitle = {};
-
-        const titles = 
-        [...new Set(this.props.formulas
-            .map(formula => formula.category))];
-        
-        groupedByTitle = titles.forEach(element => {
-            let category = {
-                title: element,
-                formulas: this.props.formulas
-                .filter(formula => 
-                    formula.displayName === element)
-            }
-            tempArray.push(groupedByTitle);
-            console.log('Inside assemble');
-            console.log(category);
-        });
-
-        console.log('assemble()');
-        console.log(tempArray);
-
-        // this.setState({
-        //     groupedList: tempArray  
-        // });  
     }
 
     handleInput = (event, {newValue, method}) => {
@@ -104,7 +48,7 @@ class FormulaSearch extends React.Component {
       
         const regex = new RegExp('^' + escapedValue, 'i');
       
-        return this.state.groupedList
+        return this.props.groupedList
           .map(section => {
             return {
               title: section.title,
@@ -119,16 +63,19 @@ class FormulaSearch extends React.Component {
       }
 
       renderSuggestion = (suggestion) => {
+        console.log(suggestion.formulaUrl);
         return (
+          <ListGroupItem>
           <Link
-            to={`${suggestion.FormulaUrl}`}
+            to={`${suggestion.formulaUrl}`}
           >{suggestion.displayName}</Link>
+          </ListGroupItem>
         );
       }
 
       renderSectionTitle = (section) => {
         return (
-          <strong>{section.title}</strong>
+          <strong className="text-light">{section.title}</strong>
         );
       }
 
@@ -138,8 +85,8 @@ class FormulaSearch extends React.Component {
 
       render() {
         console.log('FormulaSearch');
-        console.log(this.state.groupedList);
-        console.log(this.props.formulas);
+        console.log(this.props.groupedList);
+        console.log(this.props.searchFormulas);
 
         const { value, suggestions } = this.state;
         const inputProps = {

@@ -1,26 +1,35 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { PropTypes } from 'prop-types';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, 
-    Nav, NavItem, NavLink, Dropdown, DropdownToggle, 
-    DropdownMenu, DropdownItem, UncontrolledDropdown, FormGroup, Input, Label } from 'reactstrap';
+    Nav, Dropdown, DropdownToggle, 
+    DropdownMenu, DropdownItem, FormGroup, ListGroup } from 'reactstrap';
 import { notification } from 'antd';
 import { getFormulas } from '../../api_utility/ApiCalls';
-import FormulaSearch from './FormulaSearch';
 import "bootswatch/dist/flatly/bootstrap.min.css";
 import './AppHeader.css';
+
+const FormulaSearch = React.lazy(() => import('./FormulaSearch'));
 
 class AppHeader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             showProfileDropdown: false,
-            formulas: []
+            searchFormulas: [],
+            groupedList: []
         };
     }
 
     componentDidMount() {
         this.loadFormulasForSearch();
+    }
+
+    componentDidUpdate(prevState) {
+        if(this.state.searchFormulas.length > 0 &
+            this.state.groupedList.length === 0) {
+                this.assembleSuggestionsByCategory();
+            }
     }
 
     handleLogout = () => {
@@ -43,7 +52,7 @@ class AppHeader extends React.Component {
                 });
             }
             this.setState({
-                formulas: response._embedded.formulas,
+                searchFormulas: response._embedded.formulas
             });
         }).catch(error => {
             notification.error({
@@ -51,13 +60,34 @@ class AppHeader extends React.Component {
                 description: 'Whoopsies. Something went wrong.' || error.message
             }) ;
         });
+    }
 
+    assembleSuggestionsByCategory = () => {
+
+        let tempArray = [];
+        let groupedByTitle = {};
+        let formulasList = [];
+        formulasList = this.state.searchFormulas;
+        const titles = 
+        [...new Set(formulasList
+            .map(formula => formula.category))];
+        
+        groupedByTitle = titles.forEach(element => {
+            let category = {
+                title: element,
+                formulas: formulasList
+                .filter(formula => 
+                    formula.category.localeCompare(element))
+                }
+            tempArray.push(category);
+        });
+
+        this.setState({
+            groupedList: tempArray  
+        });
     }
 
     render() {
-
-        console.log('AppHeader');
-        console.log(this.state.formulas);
 
         let menuItems;
         let dropdownTitle = "";
@@ -111,10 +141,14 @@ class AppHeader extends React.Component {
                 </Dropdown>
                 </Nav>
             </Collapse>  
-            
-            <FormGroup  inline right>
-            <FormulaSearch formulas={this.state.formulas} />
-            </FormGroup>
+            <Suspense fallback={null}>
+            <ListGroup>
+            <FormulaSearch 
+                searchFormulas={this.state.searchFormulas}
+                groupedList={this.state.groupedList}
+                />
+            </ListGroup>
+            </Suspense>
             </Navbar>
             </div>
         );
