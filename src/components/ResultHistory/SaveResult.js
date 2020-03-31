@@ -6,6 +6,7 @@ import { Button, Modal, ModalHeader, ModalBody,
     Form, FormGroup, Label, Input, ModalFooter } from 'reactstrap';
 import { notification } from 'antd';
 import { saveResultHistoryObject } from '../../api_utility/ApiCalls';
+import "bootswatch/dist/flatly/bootstrap.min.css";
 
 class SaveResult extends React.Component {
     constructor(props) {

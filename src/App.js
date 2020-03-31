@@ -12,6 +12,8 @@ import Register from './components/SiteUser/Register';
 import Login from './components/SiteUser/Login';
 import ConvertLanding from './components/Layout/ConvertLanding';
 import CalculateLanding from './components/Layout/CalculateLanding';
+import MathematicsLanding from './components/Layout/MathematicsLanding';
+import PhysicsLanding from './components/Layout/PhysicsLanding';
 import { getCurrentUser } from './api_utility/ApiCalls';
 import { Layout, notification } from 'antd';
 import { ACCESS_TOKEN } from './constants';
@@ -100,8 +102,8 @@ class App extends React.Component {
               <div>
               <Switch>
                 <Route exact path="/" component={Landing} />
-                <Route exact path="/convert" component={ConvertLanding} />
-                <Route exact path="/calculate" component={CalculateLanding} />
+                <Route exact path="/mathematics" component={MathematicsLanding} />
+                <Route exact path="/physics" component={PhysicsLanding} />
                 <Route exact path="/register" component={Register} />
                 <Route path="/login" render={(props) => 
                   <Login 

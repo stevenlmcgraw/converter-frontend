@@ -126,3 +126,11 @@ export function getAllUsernameResultHistory(username) {
         method: 'GET'
     });
 }
+
+//get formulas for navbar search
+export function getFormulas() {
+    return request({
+        url: API_BASE_URL + "/formulas",
+        method: 'GET'
+    })
+}

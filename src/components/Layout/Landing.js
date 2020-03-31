@@ -12,11 +12,11 @@ export class Landing extends React.Component {
               <h1 className="text-center text-secondary font-weight-bold">Choose Your Own Adventure</h1>
                 <hr />
                 <div className="col-auto text-center">
-                <Link className="btn btn-lg btn-primary mr-2" to="/convert">
-                  Convert!
+                <Link className="btn btn-lg btn-primary mr-2" to="/mathematics">
+                  Mathematics!
                 </Link>
-                <Link className="btn btn-lg btn-primary mr-2" to="/calculate">
-                  Calculate!
+                <Link className="btn btn-lg btn-primary mr-2" to="/physics">
+                  Physics!
                 </Link>
                 </div>
               </div>

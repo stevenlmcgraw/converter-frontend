@@ -5,6 +5,7 @@ import {
     ModalHeader, ModalBody, Modal,
     ModalFooter  } from 'reactstrap';
   import Result from '../ResultHistory/Result';
+  import "bootswatch/dist/flatly/bootstrap.min.css";
 
 class ResultCard extends React.Component {
     constructor(props) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'reactstrap';
+import "bootswatch/dist/flatly/bootstrap.min.css";
 
 class SaveResultButton extends React.Component {
 constructor(props) {

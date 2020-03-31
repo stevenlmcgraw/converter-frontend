@@ -5,7 +5,7 @@ import { register, checkUsernameAvailability, checkEmailAvailability } from '../
 import { MIN_USERNAME_LENGTH, MAX_USERNAME_LENGTH, 
     MAX_EMAIL_LENGTH, MIN_PASSWORD_LENGTH, 
     MAX_PASSWORD_LENGTH, DEFAULT_SUCCESSFUL_REGISTER_MESSAGE} from '../../constants/index';
-import './Register.css';
+import "bootswatch/dist/flatly/bootstrap.min.css";
 
 const FormItem = Form.Item;
 

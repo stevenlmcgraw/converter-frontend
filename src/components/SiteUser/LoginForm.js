@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { Form, Input, Button, Icon, notification } from 'antd';
 import { login } from '../../api_utility/ApiCalls';
 import { ACCESS_TOKEN } from '../../constants';
-import './Login.css';
+import "bootswatch/dist/flatly/bootstrap.min.css";
 
 const FormItem = Form.Item;
 

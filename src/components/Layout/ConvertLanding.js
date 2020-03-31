@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "bootswatch/dist/flatly/bootstrap.min.css";
 
 export class ConvertLanding extends React.Component {
     render() {

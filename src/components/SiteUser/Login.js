@@ -1,6 +1,6 @@
 import React from 'react';
 import LoginForm from '../../components/SiteUser/LoginForm';
-import './Login.css';
+import "bootswatch/dist/flatly/bootstrap.min.css";
 
 class Login extends React.Component {
     

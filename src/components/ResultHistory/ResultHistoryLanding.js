@@ -4,6 +4,7 @@ import { CardGroup, Alert, Card, CardTitle, CardText } from 'reactstrap';
 import { getAllUsernameResultHistory } from '../../api_utility/ApiCalls';
 import ResultCard from '../../components/ResultHistory/ResultCard';
 import { notification } from 'antd';
+import "bootswatch/dist/flatly/bootstrap.min.css";
 
 class ResultHistoryLanding extends React.Component {
     constructor(props) {

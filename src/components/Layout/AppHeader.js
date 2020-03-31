@@ -3,7 +3,10 @@ import { Link, withRouter } from "react-router-dom";
 import { PropTypes } from 'prop-types';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, 
     Nav, NavItem, NavLink, Dropdown, DropdownToggle, 
-    DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
+    DropdownMenu, DropdownItem, UncontrolledDropdown, FormGroup, Input, Label } from 'reactstrap';
+import { notification } from 'antd';
+import { getFormulas } from '../../api_utility/ApiCalls';
+import FormulaSearch from './FormulaSearch';
 import "bootswatch/dist/flatly/bootstrap.min.css";
 import './AppHeader.css';
 
@@ -11,8 +14,13 @@ class AppHeader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showProfileDropdown: false
+            showProfileDropdown: false,
+            formulas: []
         };
+    }
+
+    componentDidMount() {
+        this.loadFormulasForSearch();
     }
 
     handleLogout = () => {
@@ -25,7 +33,32 @@ class AppHeader extends React.Component {
         });
     }
 
+    loadFormulasForSearch = async () => {
+
+        await getFormulas()
+        .then(response => {
+            if(response.status !== 200) {
+                this.setState({
+                    formulas: []
+                });
+            }
+            this.setState({
+                formulas: response._embedded.formulas,
+            });
+        }).catch(error => {
+            notification.error({
+                message: 'Saturn Hotdog Super Calculator',
+                description: 'Whoopsies. Something went wrong.' || error.message
+            }) ;
+        });
+
+    }
+
     render() {
+
+        console.log('AppHeader');
+        console.log(this.state.formulas);
+
         let menuItems;
         let dropdownTitle = "";
         if(this.props.currentUser) {
@@ -59,7 +92,7 @@ class AppHeader extends React.Component {
         return (
             <div>
             <Navbar className="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div className="navbar">
+            
                     <NavbarBrand inverse className="navbar-brand-app" 
                     href="/">Saturn Hotdog Super Calculator</NavbarBrand>          
             <NavbarToggler />
@@ -78,7 +111,10 @@ class AppHeader extends React.Component {
                 </Dropdown>
                 </Nav>
             </Collapse>  
-            </div>
+            
+            <FormGroup  inline right>
+            <FormulaSearch formulas={this.state.formulas} />
+            </FormGroup>
             </Navbar>
             </div>
         );

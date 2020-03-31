@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react';
 import { withRouter } from 'react-router-dom';
 import { getUserProfile } from '../../api_utility/ApiCalls';
-import './UserProfile.css';
 import NotFound from '../Utilities/NotFound';
 import LoadingIndicator from '../Utilities/LoadingIndicator';
 import ServerError from '../Utilities/ServerError';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
+import "bootswatch/dist/flatly/bootstrap.min.css";
 
 const ManageFavoritesList = React.lazy(() => import('../SiteUser/ManageFavoritesList'));
 

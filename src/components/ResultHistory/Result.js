@@ -7,6 +7,7 @@ import {
     Form, FormGroup, Label, Input, FormText, 
     ModalFooter, ListGroup, ListGroupItem, Table
   } from 'reactstrap';
+  import "bootswatch/dist/flatly/bootstrap.min.css";
 
   class Result extends React.Component {
       constructor(props) {

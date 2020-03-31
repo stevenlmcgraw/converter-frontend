@@ -3,6 +3,7 @@ import InputValues from "../Utilities/InputValues";
 import {Decimal} from 'decimal.js';
 import SaveResult from '../ResultHistory/SaveResult';
 import { withRouter } from "react-router-dom";
+import "bootswatch/dist/flatly/bootstrap.min.css";
 
 class QuadraticFormula extends React.Component {
     constructor(props) {
