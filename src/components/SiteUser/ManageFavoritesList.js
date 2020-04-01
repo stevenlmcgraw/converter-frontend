@@ -8,7 +8,6 @@ class ManageFavoritesList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            //siteUser: null,
             favoritesList: [],
             selectedRowIds: [],
             draggingRowId: null,
@@ -18,10 +17,6 @@ class ManageFavoritesList extends React.Component {
     }
 
     componentDidMount() {
-        //const username = this.props.match.params.username;
-        //console.log(username);
-        //this.loadUserProfile(username);
-        //console.log(this.state.siteUser);
         this.setState({
             favoritesList: this.props.siteUser.favoritesList
         })
@@ -80,11 +75,6 @@ class ManageFavoritesList extends React.Component {
                 'Apologies, but something went awry. Try again please.'
             });
         });
-
-        console.log('saveOrder()');
-        console.log(this.props.username);
-        console.log(favoritesList);
-        console.log(formulaPositions);
     }
 
     // getListStyle = isDraggingOver => {
@@ -94,9 +84,6 @@ class ManageFavoritesList extends React.Component {
     // }
 
     render() {
-        console.log('ManageFavoritesList');
-        console.log(this.props.siteUser);
-        console.log(this.props);
 
         return (
             <React.Fragment>

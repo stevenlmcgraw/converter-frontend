@@ -3,7 +3,8 @@ import "bootswatch/dist/flatly/bootstrap.min.css";
 import { withRouter } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { notification } from 'antd';
-import { getUserProfile } from '../../api_utility/ApiCalls';
+import { getUserProfile, addFormulaToFavoritesList } 
+    from '../../api_utility/ApiCalls';
 
 class AddToFavoritesButton extends React.Component {
     constructor(props) {
@@ -39,6 +40,7 @@ class AddToFavoritesButton extends React.Component {
                     faveCheckDone: true
                 });
             }
+            
         if(this.props.currentUser !== undefined &
             this.props.currentUser !== null &
             this.props.formulaName !== undefined &
@@ -47,10 +49,30 @@ class AddToFavoritesButton extends React.Component {
         }
     }
 
-    fetchUsernameFavoritesList = () => {
+    handleClick = (event) => {
+        event.preventDefault();
 
-        console.log('fetchFaveList');
-        console.log(this.props.currentUser.username);
+        addFormulaToFavoritesList(this.props.currentUser.username,
+            this.props.formulaName)
+        .then(() => {
+            notification.success({
+                message: 'Saturn Hotdog Super Calculator',
+                description: 'Formula added to your favorites!'
+            });
+            this.setState({
+                isAlreadyFave: true,
+                faveCheckDone: true
+            })
+        }).catch(error => {
+            notification.error({
+                message: 'Saturn Hotdog Super Calculator',
+                description: 'Oh no!!! Something went wrong - give it another go yo.' 
+                || error.message
+            });
+        });
+    }
+
+    fetchUsernameFavoritesList = () => {
 
         getUserProfile(this.props.currentUser.username)
         .then(response => {
@@ -58,12 +80,8 @@ class AddToFavoritesButton extends React.Component {
                 this.setState({
                     favoritesList: []
                 });
-                console.long('inside if()');
             }
             else {
-                console.log('inside else{}');
-                console.log(response);
-                console.log(this.props.formulaName);
                 this.setState({
                     favoritesList: response.favoritesList
                 });
@@ -75,22 +93,12 @@ class AddToFavoritesButton extends React.Component {
                 description: 'Oh no!!! We have got a little problem.' || error.message
             });   
         });
-
-        
-        console.log('fetchFaveList after API call');
-        console.log(this.state.favoritesList);
-        console.log(this.state.siteUser);
     }
 
     checkIfFormulaIsFaveAlready = (formulaName) => {
         let faveList = this.state.favoritesList;
         const controlList = faveList.filter(formula =>
             formula.formulaName === formulaName);
-
-        console.log('favorite check');
-        console.log(this.state.favoritesList);
-        console.log(faveList);
-        console.log(controlList);
 
         if(controlList.length !== 0) {
             this.setState({
@@ -106,10 +114,6 @@ class AddToFavoritesButton extends React.Component {
     }
 
     render() {
-        console.log('AddFave render()');
-        console.log(this.props.formulaName);
-        console.log(this.state.isAlreadyFave);
-
         let addButton;
 
         if(this.state.isAlreadyFave) {
@@ -120,7 +124,7 @@ class AddToFavoritesButton extends React.Component {
             <div>
             <React.Fragment>
                 <Button
-                onClick={this.props.onClick}
+                onClick={(event) => this.handleClick(event)}
                 type="button"
                 className="btn-dark btn-outline-primary 
                 btn-lg btn-primary mr-2"
