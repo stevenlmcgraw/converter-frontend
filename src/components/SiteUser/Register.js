@@ -130,7 +130,7 @@ class Register extends React.Component {
                                 disabled={this.isFormInvalid()}>Register!</Button>
                                 <br></br>
                                 <br></br>
-                                Already a registered user? <Link to="/login">Login</Link>
+                                Already a registered user? <Link to="/login">Login!</Link>
                         </div>        
                         </FormItem>
                     </Form>
