@@ -1,10 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import InputValues from "../Utilities/InputValues";
 import {Decimal} from 'decimal.js';
 import SaveResult from '../ResultHistory/SaveResult';
 import { withRouter } from "react-router-dom";
 import "bootswatch/dist/flatly/bootstrap.min.css";
-import AddToFavoritesButton from "../SiteUser/AddToFavoritesButton";
+
+const AddToFavoritesButton = React.lazy(() => 
+import('../SiteUser/AddToFavoritesButton'));
 
 class QuadraticFormula extends React.Component {
     constructor(props) {
@@ -113,10 +115,12 @@ class QuadraticFormula extends React.Component {
                 </div>
                 <div>
                 <br></br>
+                <Suspense fallback={null}>
                 <AddToFavoritesButton 
                     currentUser={this.props.currentUser}
                     formulaName={this.state.formulaName}
                 />
+                </Suspense>
                 </div>
                 </div>
             </div>

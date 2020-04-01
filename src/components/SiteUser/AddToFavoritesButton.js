@@ -10,73 +10,103 @@ class AddToFavoritesButton extends React.Component {
         super(props);
         this.state = {
             isAlreadyFave: false,
-            favoritesList: []
+            faveCheckDone: false,
+            favoritesList: [],
+            componentMounted: false  
         }
     }
 
     componentDidMount() {
-        this.fetchUsernameFavoritesList();
+        this.setState({
+            componentMounted: !this.state.componentMounted
+        });
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        // if (this.props.currentUser !== undefined &
-        //     this.props.formulaName !== undefined &
-        //     this.state.favoritesList !== undefined) {
-        //     this.fetchUsernameFavoritesList();
-        //     this.checkIfFormulaIsFaveAlready(this.props.formulaName);
-        // }
-        // if(this.props.currentUser !== undefined &
-        //     this.props.formulaName !== undefined &
-        //     this.state.favoritesList !== prevState.favoritesList) {
-        //     this.fetchUsernameFavoritesList();
-        //     this.checkIfFormulaIsFaveAlready(this.props.formulaName);
-        // }
-        if(this.props.currentUser !== undefined & 
+    componentWillUnmount() {
+        this.setState({
+            componentMounted: !this.state.componentMounted,
+            isAlreadyFave: false,
+            faveCheckDone: false
+        });
+    }
+
+    componentDidUpdate(prevProps, prevState, nextProps) {
+        if(this.props.currentUser !== undefined &&
+            this.props.currentUser === null &&
+            !this.state.faveCheckDone) {
+                this.setState({
+                    isAlreadyFave: true,
+                    faveCheckDone: true
+                });
+            }
+        if(this.props.currentUser !== undefined &
+            this.props.currentUser !== null &
             this.props.formulaName !== undefined &
-            this.state.favoritesList.length === 0) {
+            !this.state.faveCheckDone) {
             this.fetchUsernameFavoritesList();
-            this.checkIfFormulaIsFaveAlready();
         }
     }
 
-    fetchUsernameFavoritesList = async () => {
+    fetchUsernameFavoritesList = () => {
 
-        await getUserProfile(this.props.currentUser.username)
+        console.log('fetchFaveList');
+        console.log(this.props.currentUser.username);
+
+        getUserProfile(this.props.currentUser.username)
         .then(response => {
-            if(response.status !== 200) {
+            if(response.status === 204) {
                 this.setState({
                     favoritesList: []
-                })
+                });
+                console.long('inside if()');
             }
-            this.setState({
-                favoritesList: response.favoritesList,
-            });
+            else {
+                console.log('inside else{}');
+                console.log(response);
+                console.log(this.props.formulaName);
+                this.setState({
+                    favoritesList: response.favoritesList
+                });
+                this.checkIfFormulaIsFaveAlready(this.props.formulaName);
+        }
         }).catch(error => {
             notification.error({
                 message: 'Saturn Hotdog Super Calculator',
                 description: 'Oh no!!! We have got a little problem.' || error.message
             });   
         });
+
+        
+        console.log('fetchFaveList after API call');
+        console.log(this.state.favoritesList);
+        console.log(this.state.siteUser);
     }
 
     checkIfFormulaIsFaveAlready = (formulaName) => {
         let faveList = this.state.favoritesList;
         const controlList = faveList.filter(formula =>
-            formula.formulaName.localeCompare(formulaName));
+            formula.formulaName === formulaName);
 
         console.log('favorite check');
+        console.log(this.state.favoritesList);
         console.log(faveList);
         console.log(controlList);
 
-        if(!controlList.length === 0) {
+        if(controlList.length !== 0) {
             this.setState({
-                isAlreadyFave: true
+                isAlreadyFave: true,
+                faveCheckDone: true
             });
+        }
+        else {
+            this.setState({
+                faveCheckDone: true
+            })
         }
     }
 
     render() {
-        console.log('AddFave');
+        console.log('AddFave render()');
         console.log(this.props.formulaName);
         console.log(this.state.isAlreadyFave);
 

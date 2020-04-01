@@ -36,6 +36,8 @@ class UserProfile extends React.Component {
 
         getUserProfile(username)
         .then(response => {
+            console.log('UserProfile');
+            console.log(response);
             this.setState({
                 siteUser: response,
                 isLoading: false

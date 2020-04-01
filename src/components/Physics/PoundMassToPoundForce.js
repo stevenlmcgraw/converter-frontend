@@ -1,15 +1,19 @@
-import React from "react";
+import React, { Suspense } from "react";
 import InputValues from "../Utilities/InputValues";
 import {Decimal} from 'decimal.js';
 import SaveResult from '../ResultHistory/SaveResult';
 import { withRouter } from "react-router-dom";
 import "bootswatch/dist/flatly/bootstrap.min.css";
 
+const AddToFavoritesButton = React.lazy(() => 
+import('../SiteUser/AddToFavoritesButton'));
+
 class PoundMassToPoundForce extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             componentMounted: false,
+            formulaName: 'poundMassToPoundForce',
             variablesUsed : {
                 poundsMass: Decimal, 
                 acceleration: Decimal, 
@@ -92,6 +96,15 @@ class PoundMassToPoundForce extends React.Component {
                 variablesUsed={this.state.variablesUsed}
                 variableNames={this.state.variableNames}
                 />
+            </div>
+            <div>
+            <br></br>
+            <Suspense fallback={null}>
+            <AddToFavoritesButton 
+                currentUser={this.props.currentUser}
+                formulaName={this.state.formulaName}
+            />
+            </Suspense>
             </div>
             </div>
             </div>
