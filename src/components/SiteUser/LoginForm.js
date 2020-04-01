@@ -44,8 +44,8 @@ class LoginForm extends React.Component {
         const { getFieldDecorator } = this.props.form;
 
         return(
-            <div>
-            <Form onSubmit={this.handleSubmit} className="logiin-form">
+            <div >
+            <Form onSubmit={this.handleSubmit} >
                 <FormItem>
                     {getFieldDecorator('username', {
                         rules: [{ required: true, message: 'Please enter your username!' }],
@@ -81,7 +81,7 @@ class LoginForm extends React.Component {
                         type="primary"
                         htmlType="submit"
                         size="large"
-                        className="login-form-button"
+                        className="btn btn-lg btn-primary mr-2"
                     >Login!</Button>
                     <br></br>
                     <br></br>

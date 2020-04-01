@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import "bootswatch/dist/flatly/bootstrap.min.css";
-//import './Landing.css';
 
 export class Landing extends React.Component {
     render() {

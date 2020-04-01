@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Form, Input, Button, Icon, notification } from 'antd';
 import { register, checkUsernameAvailability, checkEmailAvailability } from '../../api_utility/ApiCalls';
 import { MIN_USERNAME_LENGTH, MAX_USERNAME_LENGTH, 
@@ -67,11 +67,11 @@ class Register extends React.Component {
 
     render() {
         return (
-            <div className="register-container">
-                <h1 className="page-title">Register!</h1>
+            <div className="container-fluid text-center">
+                <h1 className="text-dark">Register!</h1>
                 <br></br>
-                    <div className="register-content">
-                    <Form onSubmit={this.handleSubmit} className="register-form">
+                    <div >
+                    <Form onSubmit={this.handleSubmit} >
                         <FormItem
                             hasFeedback
                             validateStatus={this.state.username.validateStatus}
@@ -126,7 +126,7 @@ class Register extends React.Component {
                                 type="primary"
                                 htmlType="submit"
                                 size="large"
-                                className="register-form-button"
+                                className="btn btn-lg btn-primary mr-2"
                                 disabled={this.isFormInvalid()}>Register!</Button>
                                 <br></br>
                                 <br></br>
@@ -317,4 +317,4 @@ class Register extends React.Component {
     }
 }
 
-export default Register;
+export default withRouter(Register);
