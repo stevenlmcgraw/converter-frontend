@@ -16,7 +16,6 @@ class ResultHistoryLanding extends React.Component {
     }
 
     componentDidMount() {
-        //this.fetchUsernameResultHistory();
         this.setState({
             componentMounted: !this.state.componentMounted
         });
@@ -56,10 +55,6 @@ class ResultHistoryLanding extends React.Component {
     }
 
     render() {
-        console.log('ResultHistoryLanding');
-        console.log(this.props.currentUser);
-        console.log(this.props);
-        console.log(this.state.resultHistories);
 
         let results;
 

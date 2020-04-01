@@ -4,12 +4,14 @@ import {Decimal} from 'decimal.js';
 import SaveResult from '../ResultHistory/SaveResult';
 import { withRouter } from "react-router-dom";
 import "bootswatch/dist/flatly/bootstrap.min.css";
+import AddToFavoritesButton from "../SiteUser/AddToFavoritesButton";
 
 class QuadraticFormula extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             componentMounted: false,
+            formulaName: 'quadraticFormula',
             variablesUsed: {
                 a: Decimal,
                 b: Decimal,
@@ -81,8 +83,6 @@ class QuadraticFormula extends React.Component {
     }
 
     render() {
-        // console.log('QuadraticFormula');
-        // console.log(this.props);
         return (
             <div>
                 <div className="jumbotron text-center">
@@ -110,6 +110,13 @@ class QuadraticFormula extends React.Component {
                                 variablesUsed={this.state.variablesUsed}
                                 variableNames={this.state.variableNames}
                     />
+                </div>
+                <div>
+                <br></br>
+                <AddToFavoritesButton 
+                    currentUser={this.props.currentUser}
+                    formulaName={this.state.formulaName}
+                />
                 </div>
                 </div>
             </div>

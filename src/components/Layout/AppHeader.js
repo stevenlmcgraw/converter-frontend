@@ -48,7 +48,7 @@ class AppHeader extends React.Component {
         .then(response => {
             if(response.status !== 200) {
                 this.setState({
-                    formulas: []
+                    searchFormulas: []
                 });
             }
             this.setState({

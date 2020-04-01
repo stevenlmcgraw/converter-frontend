@@ -20,7 +20,8 @@ constructor(props) {
                 <Button
                     onClick={this.props.onClick}
                     type="button"
-                    className="btn-dark btn-outline-primary btn-lg btn-primary mr-2"
+                    className="btn-dark btn-outline-primary 
+                    btn-lg btn-primary mr-2"
                 >Save Result!</Button>
             </React.Fragment>
         </div>
@@ -30,9 +31,7 @@ constructor(props) {
             saveButton = null;
         }
         return (
-        <div>
-        {saveButton}
-        </div>
+        <div>{saveButton}</div>
     );
     }
 }
