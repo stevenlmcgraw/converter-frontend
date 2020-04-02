@@ -24,6 +24,12 @@ class ManageFavoritesList extends React.Component {
         })
     }
 
+    componentDidUpdate(prevState) {
+        if(this.state.favoritesList !== prevState.favoritesList) {
+            this.saveOrder();
+        }
+    }
+
     onDragEnd = result => {
 
         const { destination, source, reason } = result;
@@ -82,43 +88,12 @@ class ManageFavoritesList extends React.Component {
     removeFave = (event, formulaName) => {
         event.preventDefault();
 
-        const newList = this.state.favoritesList
-        .filter(formula =>
+        const newList = this.state.favoritesList.filter(formula =>
             formula.formulaName !== formulaName
         );
 
-        console.log('removeFave');
-        console.log(newList);
-
-        this.setState({
-            favoritesList: newList
-        });
-
-        console.log(this.state.favoritesList);
-
-        this.saveOrder();
-    }
-
-    onClickRemove = (event, formulaName) => {
-        event.preventDefault();
-
-        console.log('onClickRemove()');
-        console.log(formulaName);
-
-        deleteFormulaFromFavoritesList(this.props.siteUser.username,
-            formulaName)
-        .then(() => {
-            notification.success({
-                message: 'Saturn Hotdog Super Calculator',
-                description: 'Formula removed from your favorites!'
-            });
-            this.saveOrder();
-        }).catch(error => {
-            notification.error({
-                message: 'Saturn Hotdog Super Calculator',
-                description: 'Oh no!!! Something went wrong - give it another go yo.' 
-                || error.message
-            });
+        this.setState((state) => {
+            return { favoritesList: newList }
         });
     }
 
@@ -129,7 +104,7 @@ class ManageFavoritesList extends React.Component {
     // }
 
     render() {
-
+        
         return (
             <React.Fragment>
             <DragDropContext onDragEnd={this.onDragEnd}>
