@@ -3,10 +3,19 @@ import InputValues from "../Utilities/InputValues";
 import {Decimal} from 'decimal.js';
 import SaveResult from '../ResultHistory/SaveResult';
 import { withRouter } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import "bootswatch/dist/flatly/bootstrap.min.css";
+import CalculationCard from "../Utilities/CalculationCard";
 
 const AddToFavoritesButton = React.lazy(() => 
 import('../SiteUser/AddToFavoritesButton'));
+
+
 
 class QuadraticFormula extends React.Component {
     constructor(props) {
@@ -14,13 +23,15 @@ class QuadraticFormula extends React.Component {
         this.state = {
             componentMounted: false,
             formulaName: 'quadraticFormula',
-            variablesUsed: {
-                a: Decimal,
-                b: Decimal,
-                c: Decimal,
-                x1: Decimal,
-                x2: Decimal
-            },
+            variablesUsed: 
+                {
+                a: { value: null, name: 'a', displayName: 'A' },
+                b: { value: null, name: 'b', displayName: 'B' },
+                c: { value: null, name: 'c', displayName: 'C' },
+                x1: { value: null, name: 'x1', displayName: 'Result' },
+                x2: { value: null, name: 'x2', displayName: 'Result' }
+                }
+            ,
             variableNames: {
                 coefA: 'Coefficient A',
                 coefB: 'Coefficient B',
@@ -29,16 +40,30 @@ class QuadraticFormula extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.setState({
-            componentMounted: !this.state.componentMounted
-        });
-    }
+    // componentDidMount() {
+    //     this.setState({
+    //         componentMounted: !this.state.componentMounted
+    //     });
+    // }
 
-    componentWillUnmount() {
-        this.setState({
-            componentMounted: !this.state.componentMounted
-        });
+    // componentWillUnmount() {
+    //     this.setState({
+    //         componentMounted: !this.state.componentMounted
+    //     });
+    // }
+
+    handleChange = (event) => {
+
+        console.log(event);
+        //event.preventDefault();
+
+        // const target = event.target;
+        // const inputName = target.name;
+        // const inputValue = target.value;
+
+        // await this.setState({
+        //     [inputName] : inputValue
+        // });
     }
 
     mapVariableNamesToProps = async () => { 
@@ -85,25 +110,18 @@ class QuadraticFormula extends React.Component {
     }
 
     render() {
+
+        //const classes = useStyles();
+
+        console.log(this.state.variablesUsed);
+
         return (
             <div>
                 <div className="jumbotron text-center">
-                <h1 className="text-primary">Quadratic Formula</h1>
-                    <InputValues 
-                    variableName={this.state.variableNames.coefA}
-                    inputValue={this.props.a}
-                    onVariableChange={this.handleChangeA}
-                    />
-                    <InputValues 
-                    variableName={this.state.variableNames.coefB}
-                    inputValue={this.props.b}
-                    onVariableChange={this.handleChangeB}
-                    />
-                    <InputValues 
-                    variableName={this.state.variableNames.coefC}
-                    inputValue={this.props.c}
-                    onVariableChange={this.handleChangeC}
-                    />
+                <CalculationCard 
+                    passVariablesUsed={this.state.variablesUsed}
+                    passCallback={this.handleChange}
+                />
                 
                 <div className="text-success font-weight-bolder">
                     <br></br>

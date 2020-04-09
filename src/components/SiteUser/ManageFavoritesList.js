@@ -24,11 +24,11 @@ class ManageFavoritesList extends React.Component {
         })
     }
 
-    componentDidUpdate(prevState) {
-        if(this.state.favoritesList !== prevState.favoritesList) {
-            this.saveOrder();
-        }
-    }
+    // componentDidUpdate(prevState) {
+    //     if(this.state.favoritesList !== prevState.favoritesList) {
+    //         this.saveOrder();
+    //     }
+    // }
 
     onDragEnd = result => {
 
@@ -90,10 +90,27 @@ class ManageFavoritesList extends React.Component {
 
         const newList = this.state.favoritesList.filter(formula =>
             formula.formulaName !== formulaName
-        );
+        ).map(element => element.formulaName);
+
+        console.log('removeFave');
+        console.log(newList);
 
         this.setState((state) => {
             return { favoritesList: newList }
+        });
+
+        saveUpdatedFavoritesOrder(this.props.siteUser.username, newList)
+        .then(() => {
+            notification.success({
+                message: 'Saturn Hotdog Super Calculator',
+                description: 'New Order of Favorites Successful!'
+            });
+        }).catch(error => {
+            notification.error({
+                message: 'Saturn Hotdog Calculator',
+                description: error.message || 
+                'Apologies, but something went awry. Try again please.'
+            });
         });
     }
 
