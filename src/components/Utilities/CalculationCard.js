@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Hooks, { useFormulaVariablesUsed, useFormulaInputCallback } from '../Utilities/Hooks';
 import InputValues from './InputValues';
 
 const useStyles = makeStyles({
@@ -20,36 +19,48 @@ const useStyles = makeStyles({
     }
 });
 
-const CalculationCard = ({ passVariablesUsed, passCallback }) => {
+const CalculationCard = React.memo( ({ passVariablesUsed, passCallback }) => {
 
     const classes = useStyles();
-
-    //const variablesUsed = useFormulaVariablesUsed(passVariablesUsed);
-    //const displayVariableNames = useDisplayFormulaVariableNames(passDisplayVariableNames);
-    //const parentCallback = useFormulaInputCallback(passCallback);
 
     const [ variablesUsed, setVariablesUsed ] = useState(passVariablesUsed);
     const [ parentCallback, setParentCallback ] = useState(passCallback);
 
-    console.log('CalculationCar re-rendered.');
+    useEffect(() => {
+        setVariablesUsed(passVariablesUsed);
+        setParentCallback(passCallback);
+    })
 
-    return (
-        
+    let inputValues;
+
+    inputValues = Object.entries(variablesUsed).map(([key, variable]) => (
+        <InputValues
+        passFormulaVariable={variable}
+        passCallback={passCallback}
+        />
+    ));
+
+    console.log('CalculationCard re-rendered.');
+    console.log(variablesUsed);
+    console.log(inputValues);
+    console.log(parentCallback);
+    console.log(passCallback);
+
+    
+        return (
+        <React.Fragment>
         <Card className={classes.root} variant="outlined">
             <CardContent className={classes.title}>
             <Typography>
             Calculate!
             </Typography>
-            {Object.entries(variablesUsed).map(([key, variable]) => (
-                <InputValues
-                passFormulaVariable={variable}
-                callback={parentCallback}
-                />
-            ))}
+            <form>
+            {inputValues}
+            </form>
             </CardContent>
         </Card>
-        
+        </React.Fragment>
     );
-}
+});
 
 export default CalculationCard;

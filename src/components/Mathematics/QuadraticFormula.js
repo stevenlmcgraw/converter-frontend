@@ -25,11 +25,11 @@ class QuadraticFormula extends React.Component {
             formulaName: 'quadraticFormula',
             variablesUsed: 
                 {
-                a: { value: null, name: 'a', displayName: 'A' },
-                b: { value: null, name: 'b', displayName: 'B' },
-                c: { value: null, name: 'c', displayName: 'C' },
-                x1: { value: null, name: 'x1', displayName: 'Result' },
-                x2: { value: null, name: 'x2', displayName: 'Result' }
+                a: { value: Decimal, name: 'a', displayName: 'A' },
+                b: { value: Decimal, name: 'b', displayName: 'B' },
+                c: { value: Decimal, name: 'c', displayName: 'C' },
+                x1: { value: Decimal, name: 'x1', displayName: 'Result' },
+                x2: { value: Decimal, name: 'x2', displayName: 'Result' }
                 }
             ,
             variableNames: {
@@ -52,9 +52,10 @@ class QuadraticFormula extends React.Component {
     //     });
     // }
 
-    handleChange = (event) => {
+    handleChange = (inputValue) => {
 
-        console.log(event);
+        console.log('QuadFormula handleChange');
+        console.log(inputValue);
         //event.preventDefault();
 
         // const target = event.target;
@@ -113,7 +114,9 @@ class QuadraticFormula extends React.Component {
 
         //const classes = useStyles();
 
+        console.log('QuadFormula re-rendered.');
         console.log(this.state.variablesUsed);
+        console.log(this.handleChange);
 
         return (
             <div>

@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import Decimal from 'decimal.js';
 
 export function useFormulaVariablesUsed(passVariablesUsed) {
-    const [ variablesUsed, setVariablesUsed ] = useState([]);
+    const [ variablesUsed, setVariablesUsed ] = useState(passVariablesUsed);
 
     setVariablesUsed(passVariablesUsed);
 
-    // useEffect(() => {
-    //     variablesUsed = setVariablesUsed(passVariablesUsed);
-    //  });
+    console.log('Hooks variablesUsed');
+    console.log(passVariablesUsed);
+    console.log(variablesUsed);
 
      return variablesUsed;
 }
@@ -18,21 +18,17 @@ export function useDisplayFormulaVariableNames(passVariableNames) {
 
     setDisplayVariableNames(passVariableNames);
 
-    // useEffect(() => {
-    //     variableNames = setVariableNames(passVariableNames);
-    //  });
-
     return displayVariableNames;
 }
 
 export function useFormulaVariable(passFormulaVariable) {
-    const [ formulaVariable, setFormulaVariable ] = useState(null);
+    const [ formulaVariable, setFormulaVariable ] = useState(passFormulaVariable);
 
     setFormulaVariable(passFormulaVariable);
 
-    // useEffect(() => {
-    //     formulaVariable = setFormulaVariable(passFormulaVariable);
-    //  });
+    console.log('Inside hook useFormulaVariable');
+    console.log(passFormulaVariable);
+    console.log(formulaVariable);
 
      return formulaVariable;
 }
@@ -42,10 +38,6 @@ export function useFormulaVariableName(passVariableName) {
 
     setFormulaVariableName(passVariableName);
 
-    // useEffect(() => {
-    //     formulaVariableName = setFormulaVariableName(passVariableName);
-    //  });
-
     return formulaVariableName;
 }
 
@@ -54,10 +46,6 @@ export function useDisplayFormulaVariableName(passDisplayVariableName) {
 
     setDisplayFormulaVariableName(passDisplayVariableName);
 
-    // useEffect(() => {
-    //     formulaVariableName = setFormulaVariableName(passVariableName);
-    //  });
-
     return displayFormulaVariableName;
 }
 
@@ -65,10 +53,6 @@ export function useFormulaInputCallback(passCallback) {
     const [ callback, setCallback ] = useState(null);
 
     setCallback(passCallback);
-
-    // useEffect(() => {
-    //     formulaVariableName = setFormulaVariableName(passVariableName);
-    //  });
 
     return callback;
 }
