@@ -22,16 +22,26 @@ const InputValues = React.memo( ({ passFormulaVariable, passCallback }) => {
     const [currentVariable, setCurrentVariable ] = useState(passFormulaVariable);
     const [parentCallback, setParentCallback ] = useState(passCallback);
 
-    useEffect(() => {
-      setCurrentVariable(currentVariable);
-      setParentCallback(passCallback);
-    });
-
     const handleChange = event => {
+      event.preventDefault();
+
       console.log('InputValues handleChange');
-      console.log(event);
-      setCurrentVariable(event.target); 
-      passCallback(currentVariable);
+      console.log(event.target.name);
+      console.log(event.target.value);
+
+      
+      const updatedVariable = {
+        value: event.target.value,
+        name: event.target.name,
+        displayName: currentVariable.displayName
+      };
+
+      
+      console.log(event.target);
+      console.log(updatedVariable)
+
+      setCurrentVariable(updatedVariable); 
+      passCallback(event, updatedVariable);
     }
 
     console.log('InputValues re-rendered.');

@@ -26,11 +26,6 @@ const CalculationCard = React.memo( ({ passVariablesUsed, passCallback }) => {
     const [ variablesUsed, setVariablesUsed ] = useState(passVariablesUsed);
     const [ parentCallback, setParentCallback ] = useState(passCallback);
 
-    useEffect(() => {
-        setVariablesUsed(passVariablesUsed);
-        setParentCallback(passCallback);
-    })
-
     let inputValues;
 
     inputValues = Object.entries(variablesUsed).map(([key, variable]) => (
@@ -46,7 +41,6 @@ const CalculationCard = React.memo( ({ passVariablesUsed, passCallback }) => {
     console.log(parentCallback);
     console.log(passCallback);
 
-    
         return (
         <React.Fragment>
         <Card className={classes.root} variant="outlined">

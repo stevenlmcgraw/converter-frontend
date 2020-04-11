@@ -40,41 +40,57 @@ class QuadraticFormula extends React.Component {
         }
     }
 
-    // componentDidMount() {
-    //     this.setState({
-    //         componentMounted: !this.state.componentMounted
-    //     });
-    // }
+    componentDidMount() {
+        this.setState({
+            componentMounted: !this.state.componentMounted
+        });
+    }
 
-    // componentWillUnmount() {
-    //     this.setState({
-    //         componentMounted: !this.state.componentMounted
-    //     });
-    // }
+    componentWillUnmount() {
+        this.setState({
+            componentMounted: !this.state.componentMounted
+        });
+    }
 
-    handleChange = (inputValue) => {
+    handleChange = async (event, updatedVariable) => {
 
         console.log('QuadFormula handleChange');
-        console.log(inputValue);
-        //event.preventDefault();
 
-        // const target = event.target;
-        // const inputName = target.name;
-        // const inputValue = target.value;
+        console.log(updatedVariable);
+        console.log(this.state.variablesUsed);
 
-        // await this.setState({
-        //     [inputName] : inputValue
-        // });
+        if(updatedVariable !== undefined) {
+
+            console.log('Hit if()');
+
+            const inputValue = updatedVariable.value;
+            const inputName = updatedVariable.name;
+            const inputDisplayName = updatedVariable.displayName;
+
+            await this.setState(prevState => ({
+                ...prevState,
+                variablesUsed: {
+                    ...prevState.variablesUsed,
+                [inputName]: {
+                    //...prevState.variablesUsed[inputName],
+                    value: inputValue,
+                    name: inputName,
+                    displayName: inputDisplayName
+                }}
+            }));
+        }
+
+        this.solveQuadraticFormula();
     }
 
     mapVariableNamesToProps = async () => { 
         this.setState({
             variablesUsed : {
-                a : this.state.a,
-                b : this.state.b,
-                c : this.state.c,
-                x1: this.state.x1,
-                x2: this.state.x2
+                a : this.state.variablesUsed.a,
+                b : this.state.variablesUsed.b,
+                c : this.state.variablesUsed.c,
+                x1: this.state.variablesUsed.x1,
+                x2: this.state.variablesUsed.x2
             }
         })
       };
@@ -95,28 +111,52 @@ class QuadraticFormula extends React.Component {
     }
 
     solveQuadraticFormula = () => {
+        const variables = this.state.variablesUsed;
+
+        // let a = Decimal;
+        // let b = Decimal;
+        // let c = Decimal;
+
+        // const a = this.state.variablesUsed.a.value ? this.state.variablesUsed.a.value : Decimal;
+        // const b = this.state.variablesUsed.b.value? this.state.variablesUsed.b.value : Decimal;
+        // const c = this.state.variablesUsed.c.value ? this.state.variablesUsed.c.value : Decimal;
+
+        const a = this.state.variablesUsed.a.value;
+        const b = this.state.variablesUsed.b.value? this.state.variablesUsed.b.value : Decimal;
+        const c = this.state.variablesUsed.c.value ? this.state.variablesUsed.c.value : Decimal;
+
+        // a = variables.b.value === undefined ? variables.b.value : Decimal;
+        // b = variables.b.value ? variables.b.value : Decimal;
+        // c = variables.c.value ? variables.c.value : Decimal;
+
         const discriminate = 
-            (this.state.b * this.state.b) - (4 * this.state.a * this.state.c);
+            (b * b) - (4 * a * c);
 
         const sqrtDiscrim = Math.sqrt(discriminate);
 
-        const result1 = (-this.state.b + sqrtDiscrim) / (2 * this.state.a);
-        const result2 = (-this.state.b - sqrtDiscrim) / (2 * this.state.a);
+        const result1 = (-b + sqrtDiscrim) / (2 * a);
+        const result2 = (-b - sqrtDiscrim) / (2 * a);
 
-        this.setState({
-            x1: result1,
-            x2: result2
-        });
+        console.log('Solve QuadFormula');
+        console.log(result1);
+        console.log(result2);
+
+        this.setState(prevState => ({
+            variablesUsed: {
+                ...prevState.variablesUsed,
+                x1: { value: result1 },
+                x2: { value: result2 }
+            }
+        }));
         this.mapVariableNamesToProps();
     }
 
     render() {
 
-        //const classes = useStyles();
-
         console.log('QuadFormula re-rendered.');
         console.log(this.state.variablesUsed);
-        console.log(this.handleChange);
+        // console.log(this.state.variablesUsed.x1.value);
+        // console.log(this.state.variablesUsed.x2.value);
 
         return (
             <div>
