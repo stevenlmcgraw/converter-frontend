@@ -25,18 +25,12 @@ class QuadraticFormula extends React.Component {
             formulaName: 'quadraticFormula',
             variablesUsed: 
                 {
-                a: { value: Decimal, name: 'a', displayName: 'A' },
-                b: { value: Decimal, name: 'b', displayName: 'B' },
-                c: { value: Decimal, name: 'c', displayName: 'C' },
-                x1: { value: Decimal, name: 'x1', displayName: 'Result' },
-                x2: { value: Decimal, name: 'x2', displayName: 'Result' }
+                a: { value: Decimal, name: 'a', displayName: 'a', isResult: false },
+                b: { value: Decimal, name: 'b', displayName: 'b', isResult: false },
+                c: { value: Decimal, name: 'c', displayName: 'c', isResult: false },
+                x1: { value: Decimal, name: 'x1', displayName: 'x', isResult: true },
+                x2: { value: Decimal, name: 'x2', displayName: 'x', isResult: true }
                 }
-            ,
-            variableNames: {
-                coefA: 'Coefficient A',
-                coefB: 'Coefficient B',
-                coefC: 'Coefficient C'
-            }
         }
     }
 
@@ -72,10 +66,8 @@ class QuadraticFormula extends React.Component {
                 variablesUsed: {
                     ...prevState.variablesUsed,
                 [inputName]: {
-                    //...prevState.variablesUsed[inputName],
-                    value: inputValue,
-                    name: inputName,
-                    displayName: inputDisplayName
+                    ...prevState.variablesUsed[inputName],
+                    value: inputValue
                 }}
             }));
         }
@@ -83,51 +75,49 @@ class QuadraticFormula extends React.Component {
         this.solveQuadraticFormula();
     }
 
-    mapVariableNamesToProps = async () => { 
+    mapVariableNamesToProps = () => { 
         this.setState({
             variablesUsed : {
-                a : this.state.variablesUsed.a,
-                b : this.state.variablesUsed.b,
-                c : this.state.variablesUsed.c,
-                x1: this.state.variablesUsed.x1,
-                x2: this.state.variablesUsed.x2
+                a : { 
+                    value: this.state.variablesUsed.a.value,
+                    name: this.state.variablesUsed.a.name,
+                    displayName: this.state.variablesUsed.a.displayName,
+                    isResult: false
+                },
+                b : { 
+                    value: this.state.variablesUsed.b.value,
+                    name: this.state.variablesUsed.b.name,
+                    displayName: this.state.variablesUsed.b.displayName,
+                    isResult: false
+                },
+                c : { 
+                    value: this.state.variablesUsed.c.value,
+                    name: this.state.variablesUsed.c.name,
+                    displayName: this.state.variablesUsed.c.displayName,
+                    isResult: false
+                },
+                x1 : { 
+                    value: this.state.variablesUsed.x1.value,
+                    name: this.state.variablesUsed.x1.name,
+                    displayName: this.state.variablesUsed.x1.displayName,
+                    isResult: true
+                },
+                x2 : { 
+                    value: this.state.variablesUsed.x2.value,
+                    name: this.state.variablesUsed.x2.name,
+                    displayName: this.state.variablesUsed.x2.displayName,
+                    isResult: true
+                },
             }
         })
       };
 
-    handleChangeA = async (inputValue) => {
-        await this.setState({a: inputValue});
-        this.solveQuadraticFormula();
-    }
-
-    handleChangeB = async (inputValue) => {
-        await this.setState({b: inputValue});
-        this.solveQuadraticFormula();
-    }
-
-    handleChangeC = async (inputValue) => {
-        await this.setState({c: inputValue});
-        this.solveQuadraticFormula();
-    }
-
     solveQuadraticFormula = () => {
         const variables = this.state.variablesUsed;
-
-        // let a = Decimal;
-        // let b = Decimal;
-        // let c = Decimal;
-
-        // const a = this.state.variablesUsed.a.value ? this.state.variablesUsed.a.value : Decimal;
-        // const b = this.state.variablesUsed.b.value? this.state.variablesUsed.b.value : Decimal;
-        // const c = this.state.variablesUsed.c.value ? this.state.variablesUsed.c.value : Decimal;
 
         const a = this.state.variablesUsed.a.value;
         const b = this.state.variablesUsed.b.value? this.state.variablesUsed.b.value : Decimal;
         const c = this.state.variablesUsed.c.value ? this.state.variablesUsed.c.value : Decimal;
-
-        // a = variables.b.value === undefined ? variables.b.value : Decimal;
-        // b = variables.b.value ? variables.b.value : Decimal;
-        // c = variables.c.value ? variables.c.value : Decimal;
 
         const discriminate = 
             (b * b) - (4 * a * c);
@@ -144,8 +134,14 @@ class QuadraticFormula extends React.Component {
         this.setState(prevState => ({
             variablesUsed: {
                 ...prevState.variablesUsed,
-                x1: { value: result1 },
-                x2: { value: result2 }
+                x1: { 
+                    ...prevState.variablesUsed.x1,
+                    value: result1
+                },
+                x2: { 
+                    ...prevState.variablesUsed.x2,
+                    value: result2 
+                }
             }
         }));
         this.mapVariableNamesToProps();
@@ -155,20 +151,17 @@ class QuadraticFormula extends React.Component {
 
         console.log('QuadFormula re-rendered.');
         console.log(this.state.variablesUsed);
-        // console.log(this.state.variablesUsed.x1.value);
-        // console.log(this.state.variablesUsed.x2.value);
 
         return (
-            <div>
-                <div className="jumbotron text-center">
-                <CalculationCard 
-                    passVariablesUsed={this.state.variablesUsed}
-                    passCallback={this.handleChange}
-                />
-                
+            <div className="jumbotron text-center">
+            <h1 className="text-primary">Quadratic Formula</h1>
+                <div className="text-left">
+                    <CalculationCard 
+                        passVariablesUsed={this.state.variablesUsed}
+                        passCallback={this.handleChange}
+                    />
                 <div className="text-success font-weight-bolder">
-                    <br></br>
-                    <p>Result:<br></br>x = {this.state.x1}<br></br>x = {this.state.x2}</p>
+                <br></br>
                     <SaveResult currentUser={this.props.currentUser}
                                 variablesUsed={this.state.variablesUsed}
                                 variableNames={this.state.variableNames}
@@ -176,12 +169,12 @@ class QuadraticFormula extends React.Component {
                 </div>
                 <div>
                 <br></br>
-                <Suspense fallback={null}>
-                <AddToFavoritesButton 
-                    currentUser={this.props.currentUser}
-                    formulaName={this.state.formulaName}
-                />
-                </Suspense>
+                    <Suspense fallback={null}>
+                    <AddToFavoritesButton 
+                        currentUser={this.props.currentUser}
+                        formulaName={this.state.formulaName}
+                    />
+                    </Suspense>
                 </div>
                 </div>
             </div>

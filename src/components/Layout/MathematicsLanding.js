@@ -12,6 +12,15 @@ export class MathematicsLanding extends React.Component {
               <div className="col-md-12 text-center">
                 <h1 className="display-3 mb-4">Mathematics!</h1>
                 <hr />
+                <Link className="btn btn-lg btn-primary mr-2" to="/areaRectangle">
+                  Area of a Rectangle
+                </Link>
+                <Link className="btn btn-lg btn-primary mr-2" to="/areaSquare">
+                  Area of a Square
+                </Link>
+                <Link className="btn btn-lg btn-primary mr-2" to="/pythagoreanTheorem">
+                  Pythagorean Theorem
+                </Link>
                 <Link className="btn btn-lg btn-primary mr-2" to="/quadraticFormula">
                   Quadratic Formula
                 </Link>

@@ -19,8 +19,12 @@ const InputValues = React.memo( ({ passFormulaVariable, passCallback }) => {
 
     const classes = useStyles();
 
-    const [currentVariable, setCurrentVariable ] = useState(passFormulaVariable);
+    const [currentVariable, setCurrentVariable ] = useState({});
     const [parentCallback, setParentCallback ] = useState(passCallback);
+
+    useEffect(() => {
+      setCurrentVariable(passFormulaVariable);
+    });
 
     const handleChange = event => {
       event.preventDefault();
@@ -36,7 +40,7 @@ const InputValues = React.memo( ({ passFormulaVariable, passCallback }) => {
         displayName: currentVariable.displayName
       };
 
-      
+    
       console.log(event.target);
       console.log(updatedVariable)
 
@@ -44,23 +48,49 @@ const InputValues = React.memo( ({ passFormulaVariable, passCallback }) => {
       passCallback(event, updatedVariable);
     }
 
+    const showVariable = ( passedVariable ) => {
+
+      console.log('InputValues showVariable()');
+      console.log(passedVariable);
+
+      let theVariable;
+
+       if(passedVariable.isResult) {
+          theVariable = 
+          <TextField 
+              autoComplete="off"
+              label={currentVariable.displayName}
+              name={currentVariable.name}
+              value={currentVariable.value}
+              onChange={event => handleChange(event)}
+              variant="outlined"
+              />
+        }
+        else {
+          theVariable =
+          <TextField 
+              autoComplete="off"
+              label={currentVariable.displayName}
+              name={currentVariable.name}
+              value={currentVariable.value}
+              onChange={event => handleChange(event)}
+              variant="outlined"
+              />
+        }
+      
+      return theVariable;
+    }
+
     console.log('InputValues re-rendered.');
     console.log(currentVariable);
     console.log(parentCallback);
     console.log(passCallback);
 
-          return (
-            <Typography>
-            <TextField 
-                autoComplete="off"
-                label={currentVariable.displayName}
-                name={currentVariable.name}
-                value={currentVariable.value}
-                onChange={event => handleChange(event)}
-                variant="outlined"
-                />
-            </Typography>
-        );
+        return (
+          <Typography>
+          {showVariable(currentVariable)}
+          </Typography>
+        )
     
 });
 

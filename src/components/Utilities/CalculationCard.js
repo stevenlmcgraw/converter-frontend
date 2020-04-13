@@ -23,8 +23,14 @@ const CalculationCard = React.memo( ({ passVariablesUsed, passCallback }) => {
 
     const classes = useStyles();
 
-    const [ variablesUsed, setVariablesUsed ] = useState(passVariablesUsed);
+    const [ variablesUsed, setVariablesUsed ] = useState({});
     const [ parentCallback, setParentCallback ] = useState(passCallback);
+
+    //setVariablesUsed(passVariablesUsed);
+
+    useEffect(() => {
+        setVariablesUsed(passVariablesUsed);
+    });
 
     let inputValues;
 
