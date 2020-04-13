@@ -12,6 +12,9 @@ export class MathematicsLanding extends React.Component {
               <div className="col-md-12 text-center">
                 <h1 className="display-3 mb-4">Mathematics!</h1>
                 <hr />
+                <Link className="btn btn-lg btn-primary mr-2" to="/areaCircle">
+                  Area of a Circle
+                </Link>
                 <Link className="btn btn-lg btn-primary mr-2" to="/areaRectangle">
                   Area of a Rectangle
                 </Link>

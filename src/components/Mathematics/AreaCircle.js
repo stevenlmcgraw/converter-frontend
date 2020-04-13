@@ -9,18 +9,15 @@ import "bootswatch/dist/flatly/bootstrap.min.css";
 const AddToFavoritesButton = React.lazy(() => 
 import('../SiteUser/AddToFavoritesButton'));
 
-class AreaRectangle extends React.Component {
+class AreaCircle extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             componentMounted: false,
-            formulaName: 'areaRectangle',
+            formulaName: 'areaCircle',
             variablesUsed : {
-                a: {
-                    value: Decimal, name: 'a', displayName: 'a', isResult: false
-                },
-                b: {
-                    value: Decimal, name: 'b', displayName: 'b', isResult: false
+                r: {
+                    value: Decimal, name: 'r', displayName: 'r', isResult: false
                 },
                 area: {
                     value: Decimal, name: 'area', displayName: 'Area', isResult: true
@@ -71,10 +68,10 @@ class AreaRectangle extends React.Component {
     }
 
     calculateArea = () => {
-        const varA = this.state.variablesUsed.a.value;
-        const varB = this.state.variablesUsed.b.value;
+        const pi = Decimal.acos(-1);
+        const varR = this.state.variablesUsed.r.value;
 
-        const varArea = varA * varB;
+        const varArea = pi * (varR * varR);
 
         this.setState(prevState => ({
             ...prevState,
@@ -90,13 +87,13 @@ class AreaRectangle extends React.Component {
 
     render() {
 
-        console.log('Area of a Square re-rendered.');
+        console.log('Area of a Circle re-rendered.');
         console.log(this.state.variablesUsed);
         console.log(this.props);
 
         return (
             <div className="jumbotron text-center">
-            <h1 className="text-primary">Area of a Rectangle</h1>
+            <h1 className="text-primary">Area of a Circle</h1>
                 <div className="text-left">
                     <CalculationCard 
                         passVariablesUsed={this.state.variablesUsed}
@@ -124,4 +121,4 @@ class AreaRectangle extends React.Component {
     }
 }
 
-export default withRouter(AreaRectangle);
+export default withRouter(AreaCircle);

@@ -7,6 +7,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
 import ResultHistoryLanding from "./components/ResultHistory/ResultHistoryLanding";
 import PoundMassToPoundForce from "./components/Physics/PoundMassToPoundForce";
+import AreaCircle from './components/Mathematics/AreaCircle';
 import AreaRectangle from './components/Mathematics/AreaRectangle';
 import AreaSquare from './components/Mathematics/AreaSquare';
 import QuadraticFormula from './components/Mathematics/QuadraticFormula';
@@ -128,6 +129,14 @@ class App extends React.Component {
                     isAuthenticated={this.state.isAuthenticated}
                     currentUser={this.state.currentUser}
                     {...props}></ResultHistoryLanding>
+                  }></Route>
+
+                <Route exact path="/areaCircle" 
+                  render={(props) =>
+                  <AreaCircle
+                    isAuthenticated={this.state.isAuthenticated}
+                    currentUser={this.state.currentUser}
+                    {...props} />
                   }></Route>
 
                 <Route exact path="/areaRectangle" 
