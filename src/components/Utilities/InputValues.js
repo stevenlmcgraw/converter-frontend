@@ -1,28 +1,97 @@
-import React from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
+import { useFormulaVariable, useFormulaVariableName, 
+    useDisplayFormulaVariableName, useFormulaInputCallback } from '../Utilities/Hooks';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import "bootswatch/dist/flatly/bootstrap.min.css";
 
-class InputValues extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            inputValue: '',
-            variableName: ''
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+        width: '25ch',
+      },
+    },
+  }));
+
+const InputValues = React.memo( ({ passFormulaVariable, passCallback }) => {
+
+    const classes = useStyles();
+
+    const [currentVariable, setCurrentVariable ] = useState({});
+    const [parentCallback, setParentCallback ] = useState(passCallback);
+
+    useEffect(() => {
+      setCurrentVariable(passFormulaVariable);
+    });
+
+    const handleChange = event => {
+      event.preventDefault();
+
+      console.log('InputValues handleChange');
+      console.log(event.target.name);
+      console.log(event.target.value);
+
+      
+      const updatedVariable = {
+        value: event.target.value,
+        name: event.target.name,
+        displayName: currentVariable.displayName
+      };
+
+    
+      console.log(event.target);
+      console.log(updatedVariable)
+
+      setCurrentVariable(updatedVariable); 
+      passCallback(event, updatedVariable);
+    }
+
+    const showVariable = ( passedVariable ) => {
+
+      console.log('InputValues showVariable()');
+      console.log(passedVariable);
+
+      let theVariable;
+
+       if(passedVariable.isResult) {
+          theVariable = 
+          <TextField 
+              autoComplete="off"
+              label={currentVariable.displayName}
+              name={currentVariable.name}
+              value={currentVariable.value}
+              onChange={event => handleChange(event)}
+              variant="outlined"
+              />
         }
+        else {
+          theVariable =
+          <TextField 
+              autoComplete="off"
+              label={currentVariable.displayName}
+              name={currentVariable.name}
+              value={currentVariable.value}
+              onChange={event => handleChange(event)}
+              variant="outlined"
+              />
+        }
+      
+      return theVariable;
     }
 
-    handleChange = (e) => {
-        this.props.onVariableChange(e.target.value);
-    }
+    console.log('InputValues re-rendered.');
+    console.log(currentVariable);
+    console.log(parentCallback);
+    console.log(passCallback);
 
-    render() {
         return (
-            <fieldset className="text-dark">
-                <legend>Enter value for {this.props.variableName}: </legend>
-                <input value={this.props.inputValue}
-                        onChange={this.handleChange} />
-            </fieldset>
-        );
-    }
-
-}
+          <Typography>
+          {showVariable(currentVariable)}
+          </Typography>
+        )
+    
+});
 
 export default InputValues;
