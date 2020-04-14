@@ -3,6 +3,7 @@ import InputValues from "../Utilities/InputValues";
 import {Decimal} from 'decimal.js';
 import SaveResult from '../ResultHistory/SaveResult';
 import { withRouter } from "react-router-dom";
+import CalculationCard from "../Utilities/CalculationCard";
 import "bootswatch/dist/flatly/bootstrap.min.css";
 
 const AddToFavoritesButton = React.lazy(() => 
@@ -15,15 +16,17 @@ class PoundMassToPoundForce extends React.Component {
             componentMounted: false,
             formulaName: 'poundMassToPoundForce',
             variablesUsed : {
-                poundsMass: Decimal, 
-                acceleration: Decimal, 
-                poundsForce: Decimal
-            },
-            variableNames: {
-                pM: 'Pounds Mass',
-                a: 'Acceleration Due to Gravity'
+                poundsMass: {
+                    value: Decimal, name: 'poundsMass', displayName: 'lbm', isResult: false
+                },
+                acceleration: {
+                    value: Decimal, name: 'acceleration', displayName: 'Acceleration', isResult: false
+                },
+                poundsForce: {
+                    value: Decimal, name: 'poundsForce', displayName: 'lbf', isResult: true
+                },
             }
-        };
+        }
     }
 
     componentDidMount() {
@@ -48,26 +51,56 @@ class PoundMassToPoundForce extends React.Component {
         })
       };
 
-    handlePoundsMassChange = async (inputValue) => {
-        await this.setState({ poundsMass: inputValue});
-        this.calculatePoundsForce();
-        this.mapVariableNamesToProps();
-    };
+    handleChange = async (event, updatedVariable) => {
 
-    handleAccelerationChange = async (inputValue) => {
-        await this.setState({ acceleration: inputValue });
+        console.log('PoundMass handleChange');
+
+        console.log(updatedVariable);
+        console.log(this.state.variablesUsed);
+
+        if(updatedVariable !== undefined) {
+
+            console.log('Hit if()');
+
+            const inputValue = updatedVariable.value;
+            const inputName = updatedVariable.name;
+            const inputDisplayName = updatedVariable.displayName;
+
+            await this.setState(prevState => ({
+                ...prevState,
+                variablesUsed: {
+                    ...prevState.variablesUsed,
+                [inputName]: {
+                    ...prevState.variablesUsed[inputName],
+                    value: inputValue,
+                    //name: inputName,
+                    //displayName: inputDisplayName
+                }}
+            }));
+        }
+
         this.calculatePoundsForce();
-        this.mapVariableNamesToProps();
-    };
+    }
 
     calculatePoundsForce = () => {
         
+        const lbm = this.state.variablesUsed.poundsMass.value;
+        const a = this.state.variablesUsed.acceleration.value;
+
         const earthGravityFtPerSecSq = 32.174;
 
-        const result = (this.state.poundsMass * this.state.acceleration) / earthGravityFtPerSecSq;
+        const result = (lbm * a) / earthGravityFtPerSecSq;
 
-        this.setState(
-            { poundsForce: result });
+        this.setState(prevState => ({
+            ...prevState,
+            variablesUsed: {
+                ...prevState.variablesUsed,
+                poundsForce: {
+                    ...prevState.variablesUsed.poundsForce,
+                    value: result
+                }
+            }
+        }));
     };
 
     render() {
@@ -75,27 +108,21 @@ class PoundMassToPoundForce extends React.Component {
         console.log(this.props.currentUser);
         console.log(this.props);
         return (
-            
-            <div>
-            
             <div className="jumbotron text-center">
             <h1 className="text-primary">Pound Mass to Pound Force</h1>
-                <InputValues
-                variableName={this.state.variableNames.pM}
-                inputValue={this.props.poundsMass}
-                onVariableChange={this.handlePoundsMassChange} />
-                <InputValues
-                variableName={this.state.variableNames.a}
-                inputValue={this.props.acceleration}
-                onVariableChange={this.handleAccelerationChange} />
-            
-            <div className="text-success font-weight-bolder">
-                <br></br>
-                <p>The Pounds Force result is: {this.state.poundsForce} lbf.</p>
-                <SaveResult currentUser={this.props.currentUser}
-                variablesUsed={this.state.variablesUsed}
-                variableNames={this.state.variableNames}
+            <div className="text-left">
+                <CalculationCard
+                    passVariablesUsed={this.state.variablesUsed}
+                    passCallback={this.handleChange}
                 />
+                <div className="text-success font-weight-bolder">
+                <br></br>
+                
+                <SaveResult currentUser={this.props.currentUser}
+                            variablesUsed={this.state.variablesUsed}
+                            variableNames={this.state.variableNames}
+                />
+            </div>
             </div>
             <div>
             <br></br>
@@ -105,7 +132,6 @@ class PoundMassToPoundForce extends React.Component {
                 formulaName={this.state.formulaName}
             />
             </Suspense>
-            </div>
             </div>
             </div>
     );
