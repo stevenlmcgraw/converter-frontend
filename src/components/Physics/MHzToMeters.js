@@ -9,18 +9,18 @@ import "bootswatch/dist/flatly/bootstrap.min.css";
 const AddToFavoritesButton = React.lazy(() => 
 import('../SiteUser/AddToFavoritesButton'));
 
-class AreaCircle extends React.Component {
+class MHzToMeters extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             componentMounted: false,
-            formulaName: 'areaCircle',
+            formulaName: 'mhzToMeters',
             variablesUsed : {
-                r: {
-                    value: Decimal, name: 'r', displayName: 'r', isResult: false
+                mhz: {
+                    value: Decimal, name: 'mhz', displayName: 'MHz', isResult: false
                 },
-                area: {
-                    value: Decimal, name: 'area', displayName: 'Area', isResult: true
+                meters: {
+                    value: Decimal, name: 'meters', displayName: 'meters', isResult: true
                 }
             }
         }
@@ -40,7 +40,7 @@ class AreaCircle extends React.Component {
 
     handleChange = async (event, updatedVariable) => {
 
-        console.log('AreaCircle handleChange');
+        console.log('Square Root handleChange');
 
         console.log(updatedVariable);
         console.log(this.state.variablesUsed);
@@ -64,22 +64,23 @@ class AreaCircle extends React.Component {
             }));
         }
 
-        this.calculateArea();
+        this.convert();
     }
 
-    calculateArea = () => {
-        const pi = Decimal.acos(-1);
-        const varR = this.state.variablesUsed.r.value;
+    convert = () => {
+        const mhzToMeters = 299.792458;
 
-        const varArea = pi * (varR * varR);
+        const varMhz = this.state.variablesUsed.mhz.value;
+
+        const varM = varMhz * mhzToMeters;
 
         this.setState(prevState => ({
             ...prevState,
             variablesUsed: {
                 ...prevState.variablesUsed,
-                area: {
-                    ...prevState.variablesUsed.area,
-                    value: varArea
+                meters: {
+                    ...prevState.variablesUsed.meters,
+                    value: varM
                 }
             }
         }));
@@ -87,17 +88,18 @@ class AreaCircle extends React.Component {
 
     render() {
 
-        console.log('Area of a Circle re-rendered.');
+        console.log('MHz to Meters re-rendered.');
         console.log(this.state.variablesUsed);
         console.log(this.props);
 
         return (
             <div className="jumbotron text-center">
-            <h1 className="text-info">Area of a Circle</h1>
+            <h1 className="text-info">MHz to Meters</h1>
                 <div className="text-left">
                     <CalculationCard 
                         passVariablesUsed={this.state.variablesUsed}
                         passCallback={this.handleChange}
+                        className="card card-body"
                     />
                 <div className="text-success font-weight-bolder">
                 <br></br>
@@ -121,4 +123,4 @@ class AreaCircle extends React.Component {
     }
 }
 
-export default withRouter(AreaCircle);
+export default withRouter(MHzToMeters);

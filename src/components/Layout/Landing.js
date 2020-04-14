@@ -8,7 +8,7 @@ export class Landing extends React.Component {
         <div className="container">
         {
               <div className="jumbotron-fluid">
-              <h1 className="text-center text-secondary font-weight-bold">Choose Your Own Adventure</h1>
+              <h1 className="text-center text-info font-weight-bold">Choose Your Own Adventure</h1>
                 <hr />
                 <div className="col-auto text-center">
                 <Link className="btn btn-lg btn-primary mr-2" to="/mathematics">

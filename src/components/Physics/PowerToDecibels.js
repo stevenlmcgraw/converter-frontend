@@ -9,18 +9,21 @@ import "bootswatch/dist/flatly/bootstrap.min.css";
 const AddToFavoritesButton = React.lazy(() => 
 import('../SiteUser/AddToFavoritesButton'));
 
-class AreaCircle extends React.Component {
+class PowerToDecibels extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             componentMounted: false,
-            formulaName: 'areaCircle',
+            formulaName: 'powerToDecibels',
             variablesUsed : {
-                r: {
-                    value: Decimal, name: 'r', displayName: 'r', isResult: false
+                p1: {
+                    value: Decimal, name: 'p1', displayName: 'P1', isResult: false
                 },
-                area: {
-                    value: Decimal, name: 'area', displayName: 'Area', isResult: true
+                p2: {
+                    value: Decimal, name: 'p2', displayName: 'P2', isResult: true
+                },
+                dB: {
+                    value: Decimal, name: 'dB', displayName: 'dB', isResult: true
                 }
             }
         }
@@ -40,7 +43,7 @@ class AreaCircle extends React.Component {
 
     handleChange = async (event, updatedVariable) => {
 
-        console.log('AreaCircle handleChange');
+        console.log('PowerToDecibels handleChange');
 
         console.log(updatedVariable);
         console.log(this.state.variablesUsed);
@@ -64,22 +67,22 @@ class AreaCircle extends React.Component {
             }));
         }
 
-        this.calculateArea();
+        this.convert();
     }
 
-    calculateArea = () => {
-        const pi = Decimal.acos(-1);
-        const varR = this.state.variablesUsed.r.value;
+    convert = () => {
+        const varP1 = this.state.variablesUsed.p1.value;
+        const varP2 = this.state.variablesUsed.p2.value;
 
-        const varArea = pi * (varR * varR);
+        const varDb = 10 * (Math.log(varP1/varP2));
 
         this.setState(prevState => ({
             ...prevState,
             variablesUsed: {
                 ...prevState.variablesUsed,
-                area: {
-                    ...prevState.variablesUsed.area,
-                    value: varArea
+                dB: {
+                    ...prevState.variablesUsed.dB,
+                    value: varDb
                 }
             }
         }));
@@ -87,17 +90,18 @@ class AreaCircle extends React.Component {
 
     render() {
 
-        console.log('Area of a Circle re-rendered.');
+        console.log('PowerToDecibels re-rendered.');
         console.log(this.state.variablesUsed);
         console.log(this.props);
 
         return (
             <div className="jumbotron text-center">
-            <h1 className="text-info">Area of a Circle</h1>
+            <h1 className="text-info">Power to Decibels</h1>
                 <div className="text-left">
                     <CalculationCard 
                         passVariablesUsed={this.state.variablesUsed}
                         passCallback={this.handleChange}
+                        className="card card-body"
                     />
                 <div className="text-success font-weight-bolder">
                 <br></br>
@@ -121,4 +125,4 @@ class AreaCircle extends React.Component {
     }
 }
 
-export default withRouter(AreaCircle);
+export default withRouter(PowerToDecibels);

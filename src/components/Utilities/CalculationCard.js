@@ -5,11 +5,13 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { sizing } from '@material-ui/system';
 import InputValues from './InputValues';
 
 const useStyles = makeStyles({
     root: {
-        minWidth: 275
+        minWidth: 275,
+        maxWidth: 275
     },
     title: {
         fontSize: 14
@@ -49,14 +51,19 @@ const CalculationCard = React.memo( ({ passVariablesUsed, passCallback }) => {
 
         return (
         <React.Fragment>
-        <Card className={classes.root} variant="outlined">
-            <CardContent className={classes.title}>
-            <Typography>
+        <Card 
+            className={classes.root} 
+            variant="outlined" 
+            raised="true"
+            height="auto"
+            >
+            <CardContent>
+            <Typography className={classes.title} gutterBottom>
             Calculate!
             </Typography>
-            <form>
+            <Typography className={classes.pos}>
             {inputValues}
-            </form>
+            </Typography>
             </CardContent>
         </Card>
         </React.Fragment>

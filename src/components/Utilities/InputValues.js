@@ -76,6 +76,7 @@ const InputValues = React.memo( ({ passFormulaVariable, passCallback }) => {
               onChange={event => handleChange(event)}
               variant="outlined"
               />
+              
         }
       
       return theVariable;
@@ -87,7 +88,7 @@ const InputValues = React.memo( ({ passFormulaVariable, passCallback }) => {
     console.log(passCallback);
 
         return (
-          <Typography>
+          <Typography className={classes.root}>
           {showVariable(currentVariable)}
           </Typography>
         )
