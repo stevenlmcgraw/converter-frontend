@@ -5,13 +5,26 @@ import "bootswatch/dist/flatly/bootstrap.min.css";
 export class MathematicsLanding extends React.Component {
     render() {
         return (
-        <div className="landing">
-         <div className="light-overlay landing-inner text-dark">
-          <div className="container">
+        <div className="container jumbotron-fluid">
+         
+          <div className="container-fluid">
             <div className="row">
               <div className="col-md-12 text-center">
-                <h1 className="display-3 mb-4">Mathematics!</h1>
-                <hr />
+                <h1 className="text-info display-3 mb-4 mt-2">Mathematics!</h1>
+                <div className="text-left">
+                <h2 className="text-success display-5 mb-4">Algebra!</h2>
+                <Link className="btn btn-lg btn-primary mr-2" to="/cubeRoot">
+                  Cube Root
+                </Link>
+                <Link className="btn btn-lg btn-primary mr-2" to="/quadraticFormula">
+                  Quadratic Formula
+                </Link>
+                <Link className="btn btn-lg btn-primary mr-2" to="/squareRoot">
+                  Square Root
+                </Link>
+                </div>
+                <div className="text-left">
+                <h2 className="text-success display-5 mb-4 mt-4">Geometry!</h2>
                 <Link className="btn btn-lg btn-primary mr-2" to="/areaCircle">
                   Area of a Circle
                 </Link>
@@ -24,14 +37,14 @@ export class MathematicsLanding extends React.Component {
                 <Link className="btn btn-lg btn-primary mr-2" to="/pythagoreanTheorem">
                   Pythagorean Theorem
                 </Link>
-                <Link className="btn btn-lg btn-primary mr-2" to="/quadraticFormula">
-                  Quadratic Formula
-                </Link>
+                </div>
+                
+                
               </div>
             </div>
           </div>
         </div>
-      </div>          
+                
         );
     }
 }

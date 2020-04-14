@@ -94,6 +94,7 @@ class AreaSquare extends React.Component {
             <div className="jumbotron text-center">
             <h1 className="text-primary">Area of a Square</h1>
                 <div className="text-left">
+                
                     <CalculationCard 
                         passVariablesUsed={this.state.variablesUsed}
                         passCallback={this.handleChange}

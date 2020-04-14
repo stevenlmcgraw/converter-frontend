@@ -6,12 +6,21 @@ import Landing from "./components/Layout/Landing";
 import { Route, Switch, withRouter } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
 import ResultHistoryLanding from "./components/ResultHistory/ResultHistoryLanding";
-import PoundMassToPoundForce from "./components/Physics/PoundMassToPoundForce";
+
+//mathematics imports
 import AreaCircle from './components/Mathematics/AreaCircle';
 import AreaRectangle from './components/Mathematics/AreaRectangle';
 import AreaSquare from './components/Mathematics/AreaSquare';
-import QuadraticFormula from './components/Mathematics/QuadraticFormula';
+import CubeRoot from './components/Mathematics/CubeRoot';
 import PythagoreanTheorem from './components/Mathematics/PythagoreanTheorem';
+import QuadraticFormula from './components/Mathematics/QuadraticFormula';
+import SquareRoot from './components/Mathematics/SquareRoot';
+
+//physics imports
+import MHzToMeters from './components/Physics/MHzToMeters';
+import PoundMassToPoundForce from "./components/Physics/PoundMassToPoundForce";
+import PowerToDecibels from './components/Physics/PowerToDecibels';
+
 import Register from './components/SiteUser/Register';
 import Login from './components/SiteUser/Login';
 import ConvertLanding from './components/Layout/ConvertLanding';
@@ -23,6 +32,8 @@ import { Layout, notification } from 'antd';
 import { ACCESS_TOKEN } from './constants';
 import UserProfile from "./components/SiteUser/UserProfile";
 import LoadingIndicator from './components/Utilities/LoadingIndicator';
+
+
 
 const { Content } = Layout;
 
@@ -155,9 +166,25 @@ class App extends React.Component {
                     {...props} />
                   }></Route>
 
-                <Route exact path="/quadraticFormula" 
+                <Route exact path="/cubeRoot" 
                   render={(props) =>
-                  <QuadraticFormula
+                  <CubeRoot
+                    isAuthenticated={this.state.isAuthenticated}
+                    currentUser={this.state.currentUser}
+                    {...props} />
+                  }></Route>
+
+                <Route exact path="/mhzToMeters" 
+                  render={(props) =>
+                  <MHzToMeters
+                    isAuthenticated={this.state.isAuthenticated}
+                    currentUser={this.state.currentUser}
+                    {...props} />
+                  }></Route>
+
+                <Route path="/powerToDecibels"
+                  render={(props) => 
+                  <PowerToDecibels 
                     isAuthenticated={this.state.isAuthenticated}
                     currentUser={this.state.currentUser}
                     {...props} />
@@ -166,6 +193,22 @@ class App extends React.Component {
                 <Route exact path="/pythagoreanTheorem" 
                   render={(props) =>
                   <PythagoreanTheorem
+                    isAuthenticated={this.state.isAuthenticated}
+                    currentUser={this.state.currentUser}
+                    {...props} />
+                  }></Route>
+
+                <Route exact path="/quadraticFormula" 
+                  render={(props) =>
+                  <QuadraticFormula
+                    isAuthenticated={this.state.isAuthenticated}
+                    currentUser={this.state.currentUser}
+                    {...props} />
+                  }></Route>
+
+                <Route exact path="/squareRoot" 
+                  render={(props) =>
+                  <SquareRoot
                     isAuthenticated={this.state.isAuthenticated}
                     currentUser={this.state.currentUser}
                     {...props} />

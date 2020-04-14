@@ -9,18 +9,18 @@ import "bootswatch/dist/flatly/bootstrap.min.css";
 const AddToFavoritesButton = React.lazy(() => 
 import('../SiteUser/AddToFavoritesButton'));
 
-class AreaCircle extends React.Component {
+class SquareRoot extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             componentMounted: false,
-            formulaName: 'areaCircle',
+            formulaName: 'squareRoot',
             variablesUsed : {
-                r: {
-                    value: Decimal, name: 'r', displayName: 'r', isResult: false
+                x: {
+                    value: Decimal, name: 'x', displayName: 'x', isResult: false
                 },
-                area: {
-                    value: Decimal, name: 'area', displayName: 'Area', isResult: true
+                sqrt: {
+                    value: Decimal, name: 'sqrt', displayName: 'Square Root', isResult: true
                 }
             }
         }
@@ -40,7 +40,7 @@ class AreaCircle extends React.Component {
 
     handleChange = async (event, updatedVariable) => {
 
-        console.log('AreaCircle handleChange');
+        console.log('Square Root handleChange');
 
         console.log(updatedVariable);
         console.log(this.state.variablesUsed);
@@ -68,18 +68,17 @@ class AreaCircle extends React.Component {
     }
 
     calculateArea = () => {
-        const pi = Decimal.acos(-1);
-        const varR = this.state.variablesUsed.r.value;
+        const varX = this.state.variablesUsed.x.value;
 
-        const varArea = pi * (varR * varR);
+        const root = Math.sqrt(varX);
 
         this.setState(prevState => ({
             ...prevState,
             variablesUsed: {
                 ...prevState.variablesUsed,
-                area: {
+                sqrt: {
                     ...prevState.variablesUsed.area,
-                    value: varArea
+                    value: root
                 }
             }
         }));
@@ -87,13 +86,13 @@ class AreaCircle extends React.Component {
 
     render() {
 
-        console.log('Area of a Circle re-rendered.');
+        console.log('Square Root re-rendered.');
         console.log(this.state.variablesUsed);
         console.log(this.props);
 
         return (
             <div className="jumbotron text-center">
-            <h1 className="text-info">Area of a Circle</h1>
+            <h1 className="text-info">Square Root</h1>
                 <div className="text-left">
                     <CalculationCard 
                         passVariablesUsed={this.state.variablesUsed}
@@ -121,4 +120,4 @@ class AreaCircle extends React.Component {
     }
 }
 
-export default withRouter(AreaCircle);
+export default withRouter(SquareRoot);
