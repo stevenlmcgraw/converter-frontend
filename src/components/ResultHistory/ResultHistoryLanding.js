@@ -38,7 +38,7 @@ class ResultHistoryLanding extends React.Component {
 
         getAllUsernameResultHistory(this.props.currentUser.username)
         .then(response => {
-            if(response.status === 204) {
+            if(response.status !== 200) {
                 this.setState({
                     resultHistories: []
                 })
