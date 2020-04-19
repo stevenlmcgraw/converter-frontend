@@ -25,6 +25,9 @@ class ResultCard extends React.Component {
         const cardTitle = this.props.resultHistory.title;
         const cardMessage = this.props.resultHistory.message;
 
+        console.log('ResultCard re-rendered.');
+        console.log(this.state.modalOpen);
+
         return (
             <div>
             <React.Fragment>

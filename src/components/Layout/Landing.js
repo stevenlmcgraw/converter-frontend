@@ -4,6 +4,9 @@ import "bootswatch/dist/flatly/bootstrap.min.css";
 
 export class Landing extends React.Component {
     render() {
+
+      console.log('Landing re-rendered.');
+
         return (
         <div className="container">
         {

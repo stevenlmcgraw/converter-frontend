@@ -103,6 +103,9 @@ class App extends React.Component {
   }
 
   render() {
+
+    console.log('App.js re-rendered.');
+
     if(this.state.isLoading) {
       return <LoadingIndicator />
     }
