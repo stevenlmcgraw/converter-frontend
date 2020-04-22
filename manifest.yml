@@ -1,0 +1,9 @@
+applications:
+- name: converter-frontend
+  path: build/
+  memory: 64M
+  instances: 1
+  timeout: 120
+  routes:
+      - route: saturn-hotdog-super-calculator.cfapps.io
+  buildpack: https://github.com/cloudfoundry/staticfile-buildpack
