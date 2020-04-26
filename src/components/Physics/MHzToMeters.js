@@ -72,7 +72,7 @@ class MHzToMeters extends React.Component {
 
         const varMhz = this.state.variablesUsed.mhz.value;
 
-        const varM = varMhz * mhzToMeters;
+        const varM = mhzToMeters / varMhz;
 
         this.setState(prevState => ({
             ...prevState,
