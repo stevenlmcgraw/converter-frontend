@@ -4,7 +4,7 @@ import { getUserProfile } from '../../api_utility/ApiCalls';
 import NotFound from '../Utilities/NotFound';
 import LoadingIndicator from '../Utilities/LoadingIndicator';
 import ServerError from '../Utilities/ServerError';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import "bootswatch/dist/flatly/bootstrap.min.css";
 
@@ -87,9 +87,9 @@ class UserProfile extends React.Component {
             return <ServerError />;
         }
 
-        const tabBarStyle = {
-            textAlign: 'center'
-        };
+        // const tabBarStyle = {
+        //     textAlign: 'center'
+        // };
 
         return (
             <div className="container-fluid text-center">

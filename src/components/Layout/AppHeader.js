@@ -3,7 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import { PropTypes } from 'prop-types';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, 
     Nav, Dropdown, DropdownToggle, 
-    DropdownMenu, DropdownItem, FormGroup, ListGroup } from 'reactstrap';
+    DropdownMenu, DropdownItem, ListGroup } from 'reactstrap';
 import { notification } from 'antd';
 import { getFormulas } from '../../api_utility/ApiCalls';
 import "bootswatch/dist/flatly/bootstrap.min.css";
@@ -65,14 +65,13 @@ class AppHeader extends React.Component {
     assembleSuggestionsByCategory = () => {
 
         let tempArray = [];
-        let groupedByTitle = {};
         let formulasList = [];
         formulasList = this.state.searchFormulas;
         const titles = 
         [...new Set(formulasList
             .map(formula => formula.category))];
         
-        groupedByTitle = titles.forEach(element => {
+        titles.forEach(element => {
             let category = {
                 title: element,
                 formulas: formulasList

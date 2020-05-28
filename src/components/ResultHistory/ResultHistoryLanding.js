@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { CardGroup, Alert, Card, CardTitle, CardText } from 'reactstrap';
+import { CardGroup, Card, CardTitle, CardText } from 'reactstrap';
 import { getAllUsernameResultHistory } from '../../api_utility/ApiCalls';
 import ResultCard from '../../components/ResultHistory/ResultCard';
 import { notification } from 'antd';

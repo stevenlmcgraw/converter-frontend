@@ -1,11 +1,8 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { sizing } from '@material-ui/system';
 import InputValues from './InputValues';
 
 const useStyles = makeStyles({
@@ -25,14 +22,14 @@ const CalculationCard = React.memo( ({ passVariablesUsed, passCallback }) => {
 
     const classes = useStyles();
 
+    // TODO: these are unneccesary state variables. You can just use the passed props directly.
     const [ variablesUsed, setVariablesUsed ] = useState({});
-    const [ parentCallback, setParentCallback ] = useState(passCallback);
-
-    //setVariablesUsed(passVariablesUsed);
+    const [ parentCallback, setParentCallback ] = useState();
 
     useEffect(() => {
         setVariablesUsed(passVariablesUsed);
-    });
+        setParentCallback(passCallback);
+    }, [passVariablesUsed, passCallback]);
 
     let inputValues;
 
