@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import Decimal from 'decimal.js';
+import { useState } from 'react';
 
 export function useFormulaVariablesUsed(passVariablesUsed) {
     const [ variablesUsed, setVariablesUsed ] = useState(passVariablesUsed);

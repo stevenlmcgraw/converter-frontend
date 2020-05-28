@@ -1,10 +1,7 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import { Link, withRouter } from "react-router-dom";
-import { PropTypes } from 'prop-types';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, 
-    Nav, NavItem, NavLink, Dropdown, DropdownToggle, 
-    DropdownMenu, DropdownItem, UncontrolledDropdown, FormGroup, Input, Label, ListGroupItem } from 'reactstrap';
+import { ListGroupItem } from 'reactstrap';
 import "bootswatch/dist/flatly/bootstrap.min.css";
 
 class FormulaSearch extends React.Component {

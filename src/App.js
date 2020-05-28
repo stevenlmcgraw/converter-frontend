@@ -23,8 +23,6 @@ import PowerToDecibels from './components/Physics/PowerToDecibels';
 
 import Register from './components/SiteUser/Register';
 import Login from './components/SiteUser/Login';
-import ConvertLanding from './components/Layout/ConvertLanding';
-import CalculateLanding from './components/Layout/CalculateLanding';
 import MathematicsLanding from './components/Layout/MathematicsLanding';
 import PhysicsLanding from './components/Layout/PhysicsLanding';
 import { getCurrentUser } from './api_utility/ApiCalls';

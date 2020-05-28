@@ -1,6 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from "react";
-import { useFormulaVariable, useFormulaVariableName, 
-    useDisplayFormulaVariableName, useFormulaInputCallback } from '../Utilities/Hooks';
+import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -19,12 +17,15 @@ const InputValues = React.memo( ({ passFormulaVariable, passCallback }) => {
 
     const classes = useStyles();
 
+    // TODO: Not sure why you would do it this way, but this is how you could use useEffect to reassign
+    // passed props to state variable in the component.
     const [currentVariable, setCurrentVariable ] = useState({});
-    const [parentCallback, setParentCallback ] = useState(passCallback);
+    const [parentCallback, setParentCallback ] = useState();
 
     useEffect(() => {
       setCurrentVariable(passFormulaVariable);
-    });
+      setParentCallback(passCallback)
+    }, [passFormulaVariable, passCallback]);
 
     const handleChange = event => {
       event.preventDefault();

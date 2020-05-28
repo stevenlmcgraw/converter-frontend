@@ -1,6 +1,6 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { saveUpdatedFavoritesOrder, deleteFormulaFromFavoritesList } from '../../api_utility/ApiCalls';
+import { saveUpdatedFavoritesOrder } from '../../api_utility/ApiCalls';
 import { notification } from 'antd';
 import RemoveIcon from '@material-ui/icons/Remove';
 import IconButton from '@material-ui/core/IconButton';

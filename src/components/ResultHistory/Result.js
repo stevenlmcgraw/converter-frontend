@@ -1,20 +1,9 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button,
-    ModalHeader, ModalBody, Modal,
-    Form, FormGroup, Label, Input, FormText, 
-    ModalFooter, ListGroup, ListGroupItem, Table
-  } from 'reactstrap';
+import { ListGroup, ListGroupItem, Table } from 'reactstrap';
   import "bootswatch/dist/flatly/bootstrap.min.css";
 
   class Result extends React.Component {
-      constructor(props) {
-          super(props);
-
-      }
-
+ 
       render() {
           const calcAttrs = this.props.resultHistory.calculationAttributes;
           const getCalcAttrs = Object.keys(this.props.resultHistory.calculationAttributes)

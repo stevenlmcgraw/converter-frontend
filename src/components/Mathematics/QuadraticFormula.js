@@ -1,14 +1,7 @@
 import React, { Suspense } from "react";
-import InputValues from "../Utilities/InputValues";
 import {Decimal} from 'decimal.js';
 import SaveResult from '../ResultHistory/SaveResult';
 import { withRouter } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import "bootswatch/dist/flatly/bootstrap.min.css";
 import CalculationCard from "../Utilities/CalculationCard";
 
@@ -59,7 +52,7 @@ class QuadraticFormula extends React.Component {
 
             const inputValue = updatedVariable.value;
             const inputName = updatedVariable.name;
-            const inputDisplayName = updatedVariable.displayName;
+            // const inputDisplayName = updatedVariable.displayName;
 
             await this.setState(prevState => ({
                 ...prevState,
@@ -113,7 +106,7 @@ class QuadraticFormula extends React.Component {
       };
 
     solveQuadraticFormula = () => {
-        const variables = this.state.variablesUsed;
+        // const variables = this.state.variablesUsed;
 
         const a = this.state.variablesUsed.a.value;
         const b = this.state.variablesUsed.b.value? this.state.variablesUsed.b.value : Decimal;

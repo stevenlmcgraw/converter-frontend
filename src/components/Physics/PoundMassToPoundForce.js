@@ -1,5 +1,4 @@
 import React, { Suspense } from "react";
-import InputValues from "../Utilities/InputValues";
 import {Decimal} from 'decimal.js';
 import SaveResult from '../ResultHistory/SaveResult';
 import { withRouter } from "react-router-dom";
@@ -64,7 +63,7 @@ class PoundMassToPoundForce extends React.Component {
 
             const inputValue = updatedVariable.value;
             const inputName = updatedVariable.name;
-            const inputDisplayName = updatedVariable.displayName;
+            // const inputDisplayName = updatedVariable.displayName;
 
             await this.setState(prevState => ({
                 ...prevState,
