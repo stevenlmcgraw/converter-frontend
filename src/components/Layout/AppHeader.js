@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { PropTypes } from 'prop-types';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, 
@@ -11,62 +11,77 @@ import './AppHeader.css';
 
 const FormulaSearch = React.lazy(() => import('./FormulaSearch'));
 
-class AppHeader extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showProfileDropdown: false,
-            searchFormulas: [],
-            groupedList: []
-        };
-    }
+// You can destructure your props like this
+const AppHeader = ({ isAuthenticated, currentUser, onLogout }) =>  {
 
-    componentDidMount() {
-        this.loadFormulasForSearch();
-    }
+    const [ state, setState ] = useState({
+        showProfileDropdown: false,
+        searchFormulas: [],
+        groupedList: []
+    })
 
-    componentDidUpdate(prevState) {
-        if(this.state.searchFormulas.length > 0 &
-            this.state.groupedList.length === 0) {
-                this.assembleSuggestionsByCategory();
-            }
-    }
+    // this is the hooks way to do what componentDidMount() used to do
+    useEffect(() => {
 
-    handleLogout = () => {
-        this.props.onLogout();
-    }
+        let componentIsMounted = true; 
 
-    toggle = () => {
-        this.setState({
-            showProfileDropdown: !this.state.showProfileDropdown
-        });
-    }
+        const loadFormulasForSearch = async () => {
 
-    loadFormulasForSearch = async () => {
-
-        await getFormulas()
-        .then(response => {
-            if(response.status !== 200) {
-                this.setState({
-                    searchFormulas: []
-                });
-            }
-            this.setState({
-                searchFormulas: response._embedded.formulas
+            await getFormulas()
+            .then(response => {
+                if(response.status !== 200 && componentIsMounted) {
+                    setState(s => ({
+                        ...s,
+                        searchFormulas: []
+                    }));
+                } else if(componentIsMounted) {
+                    setState(s => ({
+                        ...s,
+                        searchFormulas: response._embedded.formulas
+                    }));
+                }
+            }).catch(error => {
+                notification.error({
+                    message: 'Saturn Hotdog Super Calculator',
+                    description: 'Whoopsies. Something went wrong.' || error.message
+                }) ;
             });
-        }).catch(error => {
-            notification.error({
-                message: 'Saturn Hotdog Super Calculator',
-                description: 'Whoopsies. Something went wrong.' || error.message
-            }) ;
+        }
+
+        loadFormulasForSearch();
+        
+        return () => {
+            componentIsMounted = false;
+        }
+
+    }, [])
+
+    // this is the hooks way to do what componentDidUpdate used to do
+    useEffect(() => {
+        if(state.searchFormulas.length > 0 &
+            state.groupedList.length === 0) {
+                assembleSuggestionsByCategory();
+            }
+    })
+
+    const handleLogout = () => {
+        onLogout();
+    }
+
+    const toggle = () => {
+        setState({
+            ...state,
+            showProfileDropdown: !state.showProfileDropdown
         });
     }
 
-    assembleSuggestionsByCategory = () => {
+
+
+    const assembleSuggestionsByCategory = () => {
 
         let tempArray = [];
         let formulasList = [];
-        formulasList = this.state.searchFormulas;
+        formulasList = state.searchFormulas;
         const titles = 
         [...new Set(formulasList
             .map(formula => formula.category))];
@@ -81,77 +96,77 @@ class AppHeader extends React.Component {
             tempArray.push(category);
         });
 
-        this.setState({
+        setState({
+            ...state, 
             groupedList: tempArray  
         });
     }
 
-    render() {
 
-        let menuItems;
-        let dropdownTitle = "";
-        if(this.props.currentUser) {
-            dropdownTitle = this.props.currentUser.username;
-            menuItems = [             
-            <DropdownItem className="navbar-dropdown-item text-center">
-                <Link  
-                to={`/profile/${this.props.currentUser.username}`}>Profile</Link>
-            </DropdownItem>,
-            <DropdownItem className="navbar-dropdown-item text-center">
-                <Link  
-                to="/resultHistory">Result History</Link>
-            </DropdownItem>,
-            <DropdownItem onClick={this.handleLogout} className="navbar-dropdown-item text-center">
-                <Link to="/">Logout!</Link>
-            </DropdownItem>
-            ];
-        }
-        else {
-            dropdownTitle = "Login/Register";
-            menuItems = [
-                <DropdownItem className="navbar-dropdown-item text-center" >
-                    <Link to="/login">Login!</Link>
-                </DropdownItem>,
-                <DropdownItem className="navbar-dropdown-item text-center" >
-                    <Link to="/register">Register!</Link>
-                </DropdownItem>
-            ];
-        }
-
-        return (
-            <div>
-            <Navbar className="navbar navbar-expand-lg navbar-dark bg-primary">
-            
-                    <NavbarBrand inverse className="navbar-brand-app" 
-                    href="/">Saturn Hotdog Super Calculator</NavbarBrand>          
-            <NavbarToggler />
-            <Collapse isOpen={this.state.showProfileDropdown} navbar className="dropdown-menu-right">
-                <Nav navbar right className="dropdown-menu-right">
-                <Dropdown isOpen={this.state.showProfileDropdown} 
-                toggle={this.toggle}
-                nav inNavbar right
-                >
-                    <DropdownToggle nav caret>
-                        {dropdownTitle}
-                    </DropdownToggle>
-                    <DropdownMenu right className="dropdown-menu-right">
-                        {menuItems}
-                    </DropdownMenu>
-                </Dropdown>
-                </Nav>
-            </Collapse>  
-            <Suspense fallback={null}>
-            <ListGroup>
-            <FormulaSearch 
-                searchFormulas={this.state.searchFormulas}
-                groupedList={this.state.groupedList}
-                />
-            </ListGroup>
-            </Suspense>
-            </Navbar>
-            </div>
-        );
+    let menuItems;
+    let dropdownTitle = "";
+    if(currentUser) {
+        dropdownTitle = currentUser.username;
+        menuItems = [             
+        <DropdownItem key="item1" className="navbar-dropdown-item text-center">
+            <Link  
+            to={`/profile/${currentUser.username}`}>Profile</Link>
+        </DropdownItem>,
+        <DropdownItem key="item2" className="navbar-dropdown-item text-center">
+            <Link  
+            to="/resultHistory">Result History</Link>
+        </DropdownItem>,
+        <DropdownItem key="item3" onClick={handleLogout} className="navbar-dropdown-item text-center">
+            <Link to="/">Logout!</Link>
+        </DropdownItem>
+        ];
     }
+
+    else {
+        dropdownTitle = "Login/Register";
+        menuItems = [
+            <DropdownItem key="item4" className="navbar-dropdown-item text-center" >
+                <Link to="/login">Login!</Link>
+            </DropdownItem>,
+            <DropdownItem key="item5" className="navbar-dropdown-item text-center" >
+                <Link to="/register">Register!</Link>
+            </DropdownItem>
+        ];       
+    }
+
+    return (
+        <div>
+        <Navbar className="navbar navbar-expand-lg navbar-dark bg-primary">
+        
+                <NavbarBrand inverse className="navbar-brand-app" 
+                href="/">Saturn Hotdog Super Calculator</NavbarBrand>          
+        <NavbarToggler />
+        <Collapse isOpen={state.showProfileDropdown} navbar className="dropdown-menu-right">
+            <Nav navbar right className="dropdown-menu-right">
+            <Dropdown isOpen={state.showProfileDropdown} 
+            toggle={toggle}
+            nav inNavbar right
+            >
+                <DropdownToggle nav caret>
+                    {dropdownTitle}
+                </DropdownToggle>
+                <DropdownMenu right className="dropdown-menu-right">
+                    {menuItems}
+                </DropdownMenu>
+            </Dropdown>
+            </Nav>
+        </Collapse>  
+        <Suspense fallback={null}>
+        <ListGroup>
+        <FormulaSearch 
+            searchFormulas={state.searchFormulas}
+            groupedList={state.groupedList}
+            />
+        </ListGroup>
+        </Suspense>
+        </Navbar>
+        </div>
+    );
 }
 
 DropdownMenu.propTypes = {
